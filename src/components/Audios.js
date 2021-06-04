@@ -3,34 +3,17 @@ import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
 import { Audio } from 'expo-av';
 
 export default class Audios extends React.Component{
-
+    constructor(props){
+        super(props)
+      }
     render(){
-        const {title,num, duration, color} = this.props
-        return(
-           <TouchableOpacity 
-           style={styles.row}
-           onPress={() => {
-
-           /*  const [sound, setSound] = useState();
-
-            async function playSound() {
-                console.log('Loading Sound');
-                const { sound } = await Audio.Sound.createAsync(
-                   require('../audios/Audio1.mp3')
-                );
-                setSound(sound);
-            
-                console.log('Playing Sound');
-                await sound.playAsync(); }
+        const {num, color, duration, title, } = this.props
         
-            React.useEffect(() => {
-                return sound
-                    ? () => {
-                        console.log('Unloading Sound');
-                        sound.unloadAsync(); }
-                    : undefined;
-                }, [sound]); */
-           }} >
+        return(
+           <View  
+           {...this.props}
+           style={styles.row}
+           >
                <View style={{
                    backgroundColor:color,
                    paddingVertical:5,
@@ -44,12 +27,13 @@ export default class Audios extends React.Component{
                    <Text style={styles.text}> {duration} </Text>
                </View>
                <TouchableOpacity
-                    style={styles.bolita}>
+                    style={styles.bolita}
+                    /* onPress={this.props.onPress} */ >
                     <Image
                         source={require("../images/play.png")}
                         style={styles.bolitaImage}/>
                 </TouchableOpacity> 
-           </TouchableOpacity>
+           </View>
         )
     }
 }

@@ -1,9 +1,50 @@
 import React,  { useState } from 'react'
-import {View, Text, StyleSheet ,Image,ImageBackground,TouchableOpacity,} from 'react-native'
+import {View, Text, StyleSheet ,Image, ImageBackground, TouchableWithoutFeedback} from 'react-native'
 import Audios from '../src/components/Audios';
+import { Audio } from 'expo-av';
 
 const Respiracion = () =>{
+    const [sound, setSound] = useState();
+    const [isNew, setIsNew] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    async function loadSound(){
+
+    }
+
+    async function playSound() {
+        if (isNew == true){
+            console.log('Loading Sound');
+            const { sound } = await Audio.Sound.createAsync(
+                 
+            );
+            setSound(sound);
+
+            console.log('Playing Sound');
+            await sound.playAsync();  
     
+            setIsPlaying(true);
+            setIsNew(false);
+        } else {
+            if (isPlaying == false){
+                console.log('Playing Sound');
+                await sound.playAsync();  
+        
+                setIsPlaying(true);
+            } else {
+                sound.pauseAsync();  
+                setIsPlaying(false);
+            }
+        }
+    }
+
+    React.useEffect(() => {
+        return sound
+            ? () => {
+                console.log('Unloading Sound');
+                sound.unloadAsync(); }
+            : undefined;
+        }, [sound]); 
 
 return(
 <ImageBackground
@@ -15,39 +56,38 @@ return(
         "Cualquiera puede sostener el timón cuando el mar está en calma"
     </Text>
         <View style={styles.title}>
+            <TouchableWithoutFeedback onPress={() => playSound()}>
                 <Audios
-                    onPress={() =>{
-                        console.log("Juan2");
-                    }}
-                    num={1}
-                    color="#fde6e6"
-                    percent={25}
-                    duration="28 minutos"
-                    title="Introducción"/>
+                num={1}
+                color="#fde6e6"
+                duration="28 minutos"
+                title="Introducción"
+                />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => playSound()}>
                 <Audios
-                    num={2}
-                    color="#f9e1fc"
-                    percent={50}
-                    duration="39 minutos"
-                    title="Primeros pasos"/>
+                num={2}
+                color="#f9e1fc"
+                duration="39 minutos"
+                title="Primeros pasos"
+                />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => playSound()}>
                 <Audios
-                    num={3}
-                    color="#e8f1fd"
-                    percent={0}
-                    duration="5 minutos"
-                    title="Encuentra tu camino"/>
+                num={3}
+                color="#e8f1fd"
+                duration="5 minutos"
+                title="Encuentra tu camino"
+                />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => playSound()}>
                 <Audios
-                    num={4}
-                    color="#e5ffef"
-                    percent={0}
-                    duration="10 minutos"
-                    title="Gracias a la vida"/>
-                <Audios
-                    num={5}
-                    color="#fbfaf6"
-                    percent={0}
-                    duration="30 minutos"
-                    title="Conclusión"/>
+                num={4}
+                color="#e5ffef"
+                duration="10 minutos"
+                title="Gracias a la vida"
+                />
+            </TouchableWithoutFeedback>
         </View>
     </ImageBackground>
     )
@@ -55,8 +95,8 @@ return(
 
 const styles = StyleSheet.create({
     image: {
-        width:"50%",
-        height:"29%",
+        width: "100pt",
+        height:"100pt",
         borderRadius: 100,
         marginTop: 30,
         alignSelf:"center"
