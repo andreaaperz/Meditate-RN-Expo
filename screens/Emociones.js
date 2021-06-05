@@ -2,8 +2,30 @@ import React, { useState } from 'react';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {StyleSheet, Text,View,Image, ImageBackground} from 'react-native';
 import Emotions from '../src/components/Emotions';
+import firebase from '../src/utils/Firebase';
+import 'firebase/auth';
 
 const Emociones = () =>{
+
+  const addEmotion = () => {
+      firebase().auth.onAuthStateChanged(user =>{
+      if (user){
+          console.log(user.uid);
+      } else {
+      }
+  })
+      /* db.collection('detalleEmociones').doc(cred.user.uid).set({
+          nombre: formData.nombre,
+          edad: formData.edad, 
+          genero: picker 
+      }).then(()=>{
+          navigation.navigate('login');
+      }).catch(err=>{
+          console.log(err);
+      }) */
+}
+
+
 return( 
   <ImageBackground
   source={require("../src/images/ola.png")}
@@ -16,6 +38,7 @@ return(
             style={styles.scroll}>
         
             <TouchableOpacity
+              onChange={addEmotion()}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#204380'}}>
               <Image
               onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"

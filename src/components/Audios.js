@@ -7,7 +7,7 @@ export default class Audios extends React.Component{
         super(props)
       }
     render(){
-        const {num, color, duration, title, } = this.props
+        const {num, color, duration, title} = this.props
         
         return(
            <View  
@@ -26,13 +26,12 @@ export default class Audios extends React.Component{
                    <Text style={styles.title}> {title} </Text>
                    <Text style={styles.text}> {duration} </Text>
                </View>
-               <TouchableOpacity
-                    style={styles.bolita}
-                    /* onPress={this.props.onPress} */ >
+               <View
+                    style={styles.bolita}>
                     <Image
-                        source={require("../images/play.png")}
+                        source={require("../images/nota-musical.png")}
                         style={styles.bolitaImage}/>
-                </TouchableOpacity> 
+                </View> 
            </View>
         )
     }
