@@ -9,7 +9,7 @@ const Respiracion = () =>{
     const [isPlaying, setIsPlaying] = useState(false);
     const [imagen, setImagen] = useState('pausa');
 
-    var track = "";
+    var track = "billie";
 
     async function playSound(number) {
         if (currentSound != number){
@@ -28,7 +28,7 @@ const Respiracion = () =>{
             }
 
             const { sound } = await Audio.Sound.createAsync(
-                require('../src/audios/' + track + '.mp3')
+               // require('../src/audios/' + track + '.mp3')
             );
 
             setSound(sound);
@@ -70,7 +70,7 @@ return(
     source={require('../src/images/back2.png')}
     style={{width:"100%",height:"100%"}}>
     <Image source ={require('../src/images/Pajaros.png')} style={styles.image}/> 
-    <Image source ={require('../src/images/' + imagen + '.png')} style={styles.play}/> 
+    <Image /* source ={require('../src/images/' + imagen + '.png')} */ style={styles.play}/> 
 
     <Text style={styles.title} >Respiración</Text>
     <Text style={styles.subtitle}>
