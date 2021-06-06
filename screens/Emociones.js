@@ -4,27 +4,24 @@ import {StyleSheet, Text,View,Image, ImageBackground} from 'react-native';
 import Emotions from '../src/components/Emotions';
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
+import 'firebase/firestore'
+
+const db = firebase.firestore(firebase);
 
 const Emociones = () =>{
 
-  const addEmotion = () => {
-      firebase().auth.onAuthStateChanged(user =>{
-      if (user){
-          console.log(user.uid);
-      } else {
-      }
-  })
-      /* db.collection('detalleEmociones').doc(cred.user.uid).set({
-          nombre: formData.nombre,
-          edad: formData.edad, 
-          genero: picker 
-      }).then(()=>{
-          navigation.navigate('login');
-      }).catch(err=>{
-          console.log(err);
-      }) */
-}
-
+  const addEmotion = (idEmocion) => {
+        firebase.auth().onAuthStateChanged(user =>{
+            db.collection('detalleEmociones').add({
+                idEmocion: idEmocion,
+                idUsuario: user.uid,
+            }).then(()=>{
+                console.log('agregado');
+            }).catch(err=>{
+                console.log(err);
+            }) 
+        })  
+    }
 
 return( 
   <ImageBackground
@@ -36,44 +33,42 @@ return(
 
         <View
             style={styles.scroll}>
-        
-            <TouchableOpacity
-              onChange={addEmotion()}
+            <TouchableOpacity 
+              onPress={()=> addEmotion('ulzmnx4Sy4WOxm1CnH18')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#204380'}}>
               <Image
-              onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"
                 source={require("../src/images/triste(1).png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#769cdf'}}>
+                onPress={()=> addEmotion('rEX3GDHzQrfnnNmDxZzX')}
+                style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#769cdf'}}>
               <Image
-              onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"
                 source={require("../src/images/triste.png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
 
             <TouchableOpacity
+              onPress={()=> addEmotion('RAuouIcMmzw1C8GmtYuR')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#d2dff5'}}>
               <Image
-              onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"
                 source={require("../src/images/esceptico.png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
 
             <TouchableOpacity
+              onPress={()=> addEmotion('49jOrAlUalFQmwPJRfQG')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#aee5b3'}}>
               <Image
-              onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"
                 source={require("../src/images/feliz(1).png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
 
             <TouchableOpacity
+              onPress={()=> addEmotion('WNIDCvQQ2gSnquZdILib')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#61d96c'}}>
               <Image
-              onPress = {() => navigation.navigate('respiracion')} title="Next screen 3"
                 source={require("../src/images/feliz(2).png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>

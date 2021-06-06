@@ -9,7 +9,6 @@ const Respiracion = () =>{
     const [isPlaying, setIsPlaying] = useState(false);
     const [imagen, setImagen] = useState('pausa');
 
-
     var track = "";
 
     async function playSound(number) {
@@ -78,14 +77,14 @@ return(
         "Cualquiera puede sostener el timón cuando el mar está en calma"
     </Text>
         <View style={styles.title}>
-            <TouchableOpacity onPress={() => playSound(1)}>
+            <TouchableWithoutFeedback onPress={() => playSound(1)}>
                 <Audios
                 num={1}
                 color="#fde6e6"
                 duration="28 minutos"
                 title="Introducción"
                 />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={() => playSound(2)}>
                 <Audios
                 num={2}
