@@ -28,7 +28,7 @@ const Respiracion = () =>{
             }
 
             const { sound } = await Audio.Sound.createAsync(
-               // require('../src/audios/' + track + '.mp3')
+               /* require('../src/audios/' + track + '.mp3') */
             );
 
             setSound(sound);

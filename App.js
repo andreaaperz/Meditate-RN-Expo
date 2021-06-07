@@ -9,6 +9,7 @@ import Respiracion from './screens/Respiración';
 import Reflexion from './screens/Reflexion';
 import Emociones from './screens/Emociones';
 import Dormir from './screens/Dormir';
+import Actualizar from './screens/Actualizar';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const myApp = () =>{
         <Stack.Screen name = "reflexion" component = {Reflexion}/>
         <Stack.Screen name = "dormir" component = {Dormir}/>
         <Stack.Screen name = "emociones" component = {Emociones}/>
+        <Stack.Screen name = "actualizar" component = {Actualizar}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

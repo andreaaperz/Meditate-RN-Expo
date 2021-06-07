@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import firebase from '../src/utils/Firebase';
@@ -11,6 +11,19 @@ const Menu = ({navigation}) =>{
       navigation.navigate('login')
     })
   }
+
+  /* const [usrId, setUsrID] = useState('');
+
+  const getUserId = async () => {
+    firebase.auth().onAuthStateChanged(cred =>{
+        setUsrID(cred.uid)
+    });
+    console.log(usrId);
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, []); */
 
     return(
       <ImageBackground
@@ -43,7 +56,7 @@ const Menu = ({navigation}) =>{
 
             <TouchableOpacity
               style={styles.bolita}
-              onPress = {() => navigation.navigate('registro')} title="Next screen 3">
+              onPress = {() => navigation.navigate('actualizar')} title="Next screen 3">
               <Image
                 source={require("../src/images/user(2).png")}
                 style={styles.bolitaImage}/>
