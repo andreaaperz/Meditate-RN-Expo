@@ -10,6 +10,7 @@ import 'firebase/auth'
 const db = firebase.firestore(firebase);
 
 const Actualizar = ({navigation}) =>{
+    
     const initialState = {
         id: "",
         nombre: "",
@@ -20,6 +21,8 @@ const Actualizar = ({navigation}) =>{
       };
 
   const [user, setUser] = useState(initialState);
+  const [formError, setFormError] = useState({});
+  const [warning, setWarning] = useState('');
 
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
@@ -41,31 +44,54 @@ const Actualizar = ({navigation}) =>{
   };
 
   const updateUser = async () => {
-    const userRef = db.collection("usuarios").doc(user.id);
-    await userRef.set({
-      nombre: user.nombre,
-      edad: user.edad,
-      genero: user.genero,
-    }).then(()=>{
-        var currentU = firebase.auth().currentUser;
-        currentU.updateEmail(user.correo).then(function() {
-            console.log('correo actualizado')
-          }).catch(function(error) {
-            console.log('Error de email: ', error)
-          });          
-    }).then(()=>{
-        var currentU = firebase.auth().currentUser;
-        currentU.updatePassword(user.contra).then(function() {
-            console.log('contraseña actualizada')
-        }).catch(function(error) {
-            console.log('Error en la contraseña: ', error)
-        });
-    }).then(()=>{
-        navigation.navigate('menu')
-    }).catch(err=>{
-        console.log(err)
-    })
-    setUser(initialState);
+    let error ={};
+    if (!user.correo || !user.nombre || !user.edad) {
+        if (!user.nombre) error.nombre = true;
+        if (!user.edad) error.edad = true;
+        if (!user.correo) error.correo = true;
+        setWarning('Falta llenar algún campo');
+    }
+    else if (!validateEmail(user.correo)) {
+        error.correo = true;
+        setWarning('Correo inválido');
+    }
+    /* else if (user.contra.length < 6 ) {
+        error.contra = true;
+        setWarning('Contraseña débil. Intenta con otra.');
+    }  */
+    else if (user.edad < 5 || user.edad > 99) {
+        error.edad = true;
+        setWarning('Rango de edad no válido');
+    } else {
+        const userRef = db.collection("usuarios").doc(user.id);
+        await userRef.set({
+        nombre: user.nombre,
+        edad: user.edad,
+        genero: user.genero,
+        }).then(()=>{
+            var currentU = firebase.auth().currentUser;
+            currentU.updateEmail(user.correo).then(function() {
+                console.log('correo actualizado')
+            }).catch(function(error) {
+                console.log('Error de email: ', error)
+            });          
+        }).then(()=>{
+            if (user.contra){
+                var currentU = firebase.auth().currentUser;
+                currentU.updatePassword(user.contra).then(function() {
+                    console.log('contraseña actualizada')
+                }).catch(function(error) {
+                    console.log('Error en la contraseña: ', error)
+                });
+            }
+        }).then(()=>{
+            navigation.navigate('menu')
+        }).catch(err=>{
+            setWarning(err);
+        })
+    }
+    //setUser(initialState);
+    setFormError(error);
   };
 
    const deleteU = async () => {
@@ -92,28 +118,31 @@ return(
             <Text style={styles.title}> 
                 ACTUALIZAR
             </Text>
-            <View style={styles.margin}>
+            <Text style={styles.warning}> 
+                {warning}
+            </Text>
+            <View style={[styles.margin, formError.nombre && styles.errorIn ]}>
                 <TextInput 
                     placeholder="Nombre"
                     value={user.nombre || ''}
                     onChangeText={(value) => handleTextChange(value, "nombre")}
                     placeholderTextColor="#1687a7"/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.correo && styles.errorIn ]}>
                 <TextInput 
                     placeholder="Correo"
                     value={user.correo || ''}
                     onChangeText={(value) => handleTextChange(value, "correo")}
                     placeholderTextColor="#1687a7"/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.contra && styles.errorIn ]}>
                 <TextInput 
                     placeholder="Contraseña"
                     secureTextEntry={true}
                     onChangeText={(value) => handleTextChange(value, "contra")}
                     placeholderTextColor="#1687a7"/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.edad && styles.errorIn ]}>
                 <TextInput 
                     placeholder="Edad"
                     value={user.edad || ''}
@@ -146,6 +175,14 @@ const styles = StyleSheet.create({
         width:"34%",
         height:"20%",
         alignSelf:"center"
+    },
+    errorIn:{
+        borderColor:"#fe3636"
+    },
+    warning:{
+        marginTop: 10,
+        alignSelf: 'center',
+        color: "#940c0c"
     },
     background: {
         backgroundColor:"#FFF",

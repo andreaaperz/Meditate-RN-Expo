@@ -36,10 +36,12 @@ const Login = ({navigation}) =>{
         setWarning('')
         setFormData({...formData,[type]:e.nativeEvent.text});
         if(!validateEmail(formData.email)){
-            console.log('error2 onchange')
             error.email=true;
+        } else {
+            error.email=false;
         }
         setFormError(error);
+        console.log(formError.email);
     }; 
 
 return(
@@ -56,7 +58,7 @@ return(
                     style={[styles.marginText]}
                     onChange={(e)=>onChange(e,"email")}/>
             </View>
-            <View style={[styles.margin, formError.password && styles.errorInput ]}>
+            <View style={[styles.margin, formError.password && styles.errorInput]}>
                 <TextInput 
                     placeholder="Contraseña"
                     placeholderTextColor="#1687a7"
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
         height:"100%"
     },
     errorInput:{
-        borderColor:"#940c0c"
+        borderColor:"#fe3636"
     },
     warning:{
         marginTop: 10,

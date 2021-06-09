@@ -8,51 +8,58 @@ import 'firebase/firestore'
 const db = firebase.firestore(firebase);
 
 const Registro = ({navigation}) =>{
-
     const [formData, setFormData] = useState(defaultValue);
     const [formError, setFormError] = useState({});
-    const [picker, setPicker] = useState('NA');
+    const [picker, setPicker] = useState('mujer');
+    const [warning, setWarning] = useState('');
 
     const register = () => {
         let error = {};
-
-        if (!formData.email || !formData.password || !formData.nombre || !formData.edad ) {
+        if (!formData.email || !formData.password || !formData.nombre || !formData.edad) {
             if (!formData.nombre) error.nombre = true;
             if (!formData.edad) error.edad = true;
+            if (!formData.email) error.email = true;
+            if (!formData.password) error.password = true;
+            setWarning('Falta llenar algún campo');
         }
         else if (!validateEmail(formData.email)) {
             error.email = true;
+            setWarning('Correo inválido');
         }
         else if (formData.password.length < 6) {
             error.password = true;
+            setWarning('Contraseña débil. Intenta con otra.');
+        } 
+        else if (formData.edad < 5 || formData.edad > 99 ) {
+            error.password = true;
+            setWarning('Rango de edad no válido');
         } 
         else {
             firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
             .then(cred =>{
-                console.log(cred.user.uid, ' ', formData.nombre, formData.edad )
                     db.collection('usuarios').doc(cred.user.uid).set({
                         nombre: formData.nombre,
                         edad: formData.edad, 
                         genero: picker 
                     }).then(()=>{
+                        setFormError(defaultValue);
                         navigation.navigate('login');
                     }).catch(err=>{
                         console.log(err);
                     })
                 }).catch(err => {
                     console.log(err);
-                    setFormError({
-                        email: true,
-                        password: true,
-                        nombre: true,
-                        edad: true,
-                    });
                 });
         }
         setFormError(error);
-    }
+    };
 
-return(
+    const onChange=(e, type)=>{
+        setWarning('')
+        setFormData({...formData, [type]: e.nativeEvent.text});
+    }; 
+
+    return(
         <View style={styles.background}>
             <Image source ={require('../src/images/flor.png')} style={styles.image}/> 
             <Text style={styles.title}>
@@ -61,52 +68,51 @@ return(
             <Text style={styles.subtitle}>
                 Inscríbete y descubre todo el potencial de Meditate
             </Text>
-            <View style={styles.margin}>
+            <Text style={styles.warning}>
+                {warning}
+            </Text>
+            <View style={[styles.margin, formError.nombre && styles.error]}>
                 <TextInput 
                     placeholder="Nombre"
                     placeholderTextColor="#1687a7"
-                    onChange = {(e)=>setFormData({...formData, nombre:e.nativeEvent.text})}
-                    style={[styles.textInputt, formError.nombre && styles.errorInput]}/>
+                    onChange = {(e)=>onChange(e, "nombre")}
+                    style={styles.textInputt}/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.email && styles.error]}>
                 <TextInput 
                     placeholder="Correo"
                     placeholderTextColor="#1687a7"
-                    onChange = {(e)=>setFormData({...formData, email:e.nativeEvent.text})}
-                    style={[styles.textInputt, formError.email && styles.errorInput]}/>
+                    onChange = {(e)=>onChange(e, "email")}
+                    style={styles.textInputt}/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.password && styles.error]}>
                 <TextInput 
                     secureTextEntry
                     placeholder="Contraseña"
                     placeholderTextColor="#1687a7"
-                    onChange = {(e)=>setFormData({...formData, password:e.nativeEvent.text})}
-                    style={[styles.textInputt, formError.password && styles.errorInput]}/>
+                    onChange = {(e)=>onChange(e, "password")}
+                    style={styles.textInputt}/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.edad && styles.error]}>
                 <TextInput 
                     placeholder="Edad"
                     placeholderTextColor="#1687a7"
                     keyboardType="numeric"
-                    onChange = {(e)=>setFormData({...formData, edad:e.nativeEvent.text})}
-                    style={[styles.textInputt, formError.edad && styles.errorInput]}/>
+                    onChange = {(e)=> onChange(e, "edad")}
+                    style={styles.textInputt}/>
             </View>
-            {/* <Picker style={styles.Picker}>
-                <Picker.Item label="Mujer" value="Mujer" />
-                <Picker.Item label="Hombre" value="Hombre" />
-            </Picker> */}
              <RNPickerSelect
-                style={picketSelectStyles.inputAndroid}
+                /* style={picketSelectStyles.inputAndroid} */
                 onValueChange={(value) => setPicker(value)}
+                value='mujer'
                 items={[
                     { label: 'Mujer', value: 'mujer' },
                     { label: 'Hombre', value: 'hombre' },
                     { label: 'Prefiero no decir', value: 'NA' },
             ]}
         />
-
             <View style={styles.boton}>
-                <Text style={styles.textboton} onPress={register}>Registrar</Text>
+                <Text style={styles.textboton} onPress={register}> Registrar </Text>
             </View>
         </View>
     );
@@ -114,19 +120,27 @@ return(
 
 function defaultValue() {
     return {
-        email: {},
-        password: {},
-        nombre:{},
-        edad: {},
+        email: "",
+        password: "",
+        nombre:"",
+        edad: "",
+        genero: ""
     }
 }
-
 
 const styles = StyleSheet.create({
     image:{
         width:"34%",
         height:"20%",
         alignSelf:"center"
+    },
+    error:{
+        borderColor:"#fe3636"
+    },
+    warning:{
+        marginTop: 10,
+        alignSelf: 'center',
+        color: "#940c0c"
     },
     background: {
         backgroundColor:"#FFF",
