@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text,View,Image, TextInput} from 'react-native';
+import {StyleSheet, Text,View,Image, TextInput, Switch} from 'react-native';
 import {validateEmail} from "../src/utils/Validation";
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
 
 const Login = ({navigation}) =>{
-
     const [formData, setFormData] = useState(defaultValue);
     const [formError, setFormError] = useState({});
+    const [warning, setWarning] = useState('');
 
     const login = ()=>{
         let error ={};
-        if(!formData.email || !formData.password){
+        if (!formData.email || !formData.password){
             if(!formData.email) error.email = true;
             if(!formData.password) error.password = true;
-        }else if(!validateEmail(formData.email)){
-            error.email=true;
-        }else{
+            setWarning('Falta llenar algún campo')
+        } else if (!validateEmail(formData.email)){
+            setWarning('Correo inválido')
+        } else {
             firebase.auth().signInWithEmailAndPassword(formData.email,formData.password)
             .then(()=>{
                 console.log("ok");
                 navigation.navigate('menu');
             })
-            .catch(()=>{
-                setFormError({
-                    email:true,
-                    password:true
-                });
+            .catch((err)=>{
+                var error = messageError(err.code);
+                setWarning(error);
             });
         }
         setFormError(error);
     };
 
     const onChange=(e,type)=>{
+        let error ={};
+        setWarning('')
         setFormData({...formData,[type]:e.nativeEvent.text});
+        if(!validateEmail(formData.email)){
+            console.log('error2 onchange')
+            error.email=true;
+        }
+        setFormError(error);
     }; 
 
 return(
@@ -43,21 +49,25 @@ return(
             <Text style={styles.subtitle}>
                 ¿Estás listo para una nueva experiencia?
             </Text>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.email && styles.errorInput ]}>
                 <TextInput 
                     placeholder="Correo"
                     placeholderTextColor="#1687a7"
-                    style={[styles.marginText, formError.email && styles.errorInput]}
+                    style={[styles.marginText]}
                     onChange={(e)=>onChange(e,"email")}/>
             </View>
-            <View style={styles.margin}>
+            <View style={[styles.margin, formError.password && styles.errorInput ]}>
                 <TextInput 
                     placeholder="Contraseña"
                     placeholderTextColor="#1687a7"
                     secureTextEntry={true}
-                    style={[styles.marginText, formError.password && styles.errorInput]}
+                    style={[styles.marginText]}
                     onChange={(e)=>onChange(e,"password")} />
             </View>
+            <Text  
+                style={styles.warning}>
+                {warning}
+            </Text>
             <View style={styles.boton}>
                 <Text 
                 onPress={login} 
@@ -74,6 +84,25 @@ return(
     );
 }
 
+function messageError(codigo) {
+    let message = '';
+    switch (codigo) {
+        case 'auth/wrong-password':
+            message = "Contraseña Incorrecta";
+            break;
+        case 'auth/user-not-found':
+            message = "Usuario no encontrado";
+            break;
+        case 'auth/weak-password':
+            message = "Contraseña débil";
+            break;
+        default:
+            message = "Hubo un error";
+    }
+    return message;
+}
+
+
 function defaultValue() {
     return {
         email: "",
@@ -85,6 +114,14 @@ const styles = StyleSheet.create({
     background: {
         backgroundColor:"#FFF",
         height:"100%"
+    },
+    errorInput:{
+        borderColor:"#940c0c"
+    },
+    warning:{
+        marginTop: 10,
+        alignSelf: 'center',
+        color: "#940c0c"
     },
     image:{
         width:"100%",
@@ -135,9 +172,6 @@ const styles = StyleSheet.create({
         color:"#1687a7",
         fontFamily:"SemiBold",
         paddingVertical:5
-    },
-    errorInput:{
-        borderColor: "#940c0c"
     }
 })
 
