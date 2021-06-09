@@ -74,13 +74,11 @@ return(
     );
 }
 
-
 function defaultValue() {
     return {
         email: "",
         password: ""
     }
-
 }
 
 const styles = StyleSheet.create({

@@ -13,6 +13,8 @@ const Actualizar = ({navigation}) =>{
     const initialState = {
         id: "",
         nombre: "",
+        correo: "",
+        contra: "",
         edad: "",
         genero: ""
       };
@@ -32,7 +34,8 @@ const Actualizar = ({navigation}) =>{
     const usuario = cred.uid
         db.collection('usuarios').doc(usuario).get()
         .then(datos=>{
-            setUser({ ...datos.data(), id: usuario });
+            var currentU = firebase.auth().currentUser;
+            setUser({ ...datos.data(), id: usuario, correo: currentU.email});
         })
     });
   };
@@ -44,7 +47,19 @@ const Actualizar = ({navigation}) =>{
       edad: user.edad,
       genero: user.genero,
     }).then(()=>{
-        console.log("Se actualizó correctamente")
+        var currentU = firebase.auth().currentUser;
+        currentU.updateEmail(user.correo).then(function() {
+            console.log('correo actualizado')
+          }).catch(function(error) {
+            console.log('Error de email: ', error)
+          });          
+    }).then(()=>{
+        var currentU = firebase.auth().currentUser;
+        currentU.updatePassword(user.contra).then(function() {
+            console.log('contraseña actualizada')
+        }).catch(function(error) {
+            console.log('Error en la contraseña: ', error)
+        });
     }).then(()=>{
         navigation.navigate('menu')
     }).catch(err=>{
@@ -54,17 +69,16 @@ const Actualizar = ({navigation}) =>{
   };
 
    const deleteU = async () => {
-    const dbRef = db.collection("usuarios").doc(user.id);
-    await dbRef.delete()
-   /*  .then(()=>{
-        firebase.auth().deleteUser(user.id)
-        .then(()=>{
-            console.log("Se eliminó el usuario correctamente")
-        })
-        .catch(err=>{
-            console.log(err)
+    const currentU = db.collection("usuarios").doc(user.id);
+    await currentU.delete()
+     .then(()=>{
+        var user = firebase.auth().currentUser;
+        user.delete().then(function() {
+            console.log("Se eliminó correctamente");
+        }).catch(function(error) {
+            console.log(error)
         });
-    }) */
+    }) 
     .then(()=>{
         navigation.navigate('login')
     }).catch((err)=>{
@@ -72,8 +86,6 @@ const Actualizar = ({navigation}) =>{
     });
   }; 
 
-  
-    
 return(
         <View style={styles.background}>
             <Image source ={require('../src/images/flor.png')} style={styles.image}/> 
@@ -89,6 +101,20 @@ return(
             </View>
             <View style={styles.margin}>
                 <TextInput 
+                    placeholder="Correo"
+                    value={user.correo || ''}
+                    onChangeText={(value) => handleTextChange(value, "correo")}
+                    placeholderTextColor="#1687a7"/>
+            </View>
+            <View style={styles.margin}>
+                <TextInput 
+                    placeholder="Contraseña"
+                    secureTextEntry={true}
+                    onChangeText={(value) => handleTextChange(value, "contra")}
+                    placeholderTextColor="#1687a7"/>
+            </View>
+            <View style={styles.margin}>
+                <TextInput 
                     placeholder="Edad"
                     value={user.edad || ''}
                     onChangeText={(value) => handleTextChange(value, "edad")}
@@ -96,7 +122,6 @@ return(
                     keyboardType="numeric"/>
             </View>
              { <RNPickerSelect
-                style={picketSelectStyles.inputAndroid}
                 onValueChange={(value) => handleTextChange(value, "genero")}
                 value={user.genero || ''}
                 items={[
@@ -115,7 +140,6 @@ return(
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     image:{
