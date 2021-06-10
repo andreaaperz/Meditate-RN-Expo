@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         fontSize:30,
         marginTop: 30,
         textAlign: 'center',
-        fontFamily:"SemiBold",
         alignSelf:"center",
     },
     subtitle: {

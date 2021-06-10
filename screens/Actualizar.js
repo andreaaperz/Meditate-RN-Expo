@@ -23,6 +23,7 @@ const Actualizar = ({navigation}) =>{
   const [user, setUser] = useState(initialState);
   const [formError, setFormError] = useState({});
   const [warning, setWarning] = useState('');
+  const [picker, setPicker] = useState();
 
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
@@ -67,7 +68,7 @@ const Actualizar = ({navigation}) =>{
         await userRef.set({
         nombre: user.nombre,
         edad: user.edad,
-        genero: user.genero,
+        genero: picker,
         }).then(()=>{
             var currentU = firebase.auth().currentUser;
             currentU.updateEmail(user.correo).then(function() {
@@ -150,15 +151,30 @@ return(
                     placeholderTextColor="#1687a7"
                     keyboardType="numeric"/>
             </View>
-             { <RNPickerSelect
-                onValueChange={(value) => handleTextChange(value, "genero")}
-                value={user.genero || ''}
+            <RNPickerSelect
+                onValueChange={(value) => setPicker(value)}
+                value={user.genero}
+                placeholder={{
+                    label: 'Mujer',
+                    value: 'mujer',
+                    color: 'purple',
+                  }}
+                  style={{
+                    ...pickerSelectStyles,
+                    iconContainer: {
+                      top: 20,
+                      right: 10,
+                    },
+                    placeholder: {
+                      color: '#1687a7',
+                      fontSize: 14,
+                    },
+                  }}
                 items={[
-                    { label: 'Mujer', value: 'mujer' },
-                    { label: 'Hombre', value: 'hombre' },
-                    { label: 'Prefiero no decir', value: 'NA' },
-            ]}
-        /> }
+                    { label: 'Hombre', value: 'hombre', color: '#1687a7' },
+                    { label: 'Prefiero no decir', value: 'NA', color: '#1687a7'},
+                    ]}
+            />
 
             <View style={styles.boton}>
                 <Text style={styles.textboton} onPress={()=>updateUser()}>Actualizar</Text>
@@ -190,11 +206,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize:30,
-        fontFamily:"SemiBold",
         alignSelf:"center",
     }, 
     subtitle: {
-        fontFamily:"SemiBold",
         marginHorizontal:50,
         fontSize: 17,
         textAlign:'center',
@@ -207,9 +221,10 @@ const styles = StyleSheet.create({
         marginHorizontal:55,
         borderWidth:2,
         marginTop:17,
+        height: 40,
         paddingHorizontal:10,
         borderColor:"#d3e0ea",
-        borderRadius:14,
+        borderRadius:5,
         paddingVertical:2
     },
     boton: {
@@ -223,7 +238,6 @@ const styles = StyleSheet.create({
     },
     textboton: {
         color:"white",
-        fontFamily:"SemiBold"
     },
     Picker: { 
         height: 50, 
@@ -236,18 +250,31 @@ const styles = StyleSheet.create({
     textInputt: {paddingHorizontal:10}
 })
 
-const picketSelectStyles = StyleSheet.create({
-    inputAndroid: {
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 9,
-        borderWidth: 0.5,
-        borderColor: 'pink',
-        borderRadius: 8,
-        color: 'black',
-        paddingRight: 30,
-        backgroundColor: '#fff',
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+      fontSize: 14,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      borderWidth: 2,
+      borderRadius: 20,
+      marginTop: 12,
+      alignItems:"center",
+      marginHorizontal:55,
+      borderColor: '#d3e0ea',
+      borderRadius: 4,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
     },
-});
+   /*  inputAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      borderRadius: 8,
+      color: 'black',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    }, */
+  });
  
 export default Actualizar

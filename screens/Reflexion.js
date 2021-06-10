@@ -86,7 +86,6 @@ const styles = StyleSheet.create(
         content: {
             marginTop: 10,
             textAlign: 'justify',
-            fontFamily:"SemiBold",
             color:"#c7f0fb",
         }
     })

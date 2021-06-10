@@ -69,13 +69,11 @@ const styles = StyleSheet.create(
             marginTop: 30,
             paddingHorizontal: 20,
             textAlign: 'center',
-            fontFamily:"SemiBold",
             alignSelf:"center",
         },
         content: {
             marginTop: 10,
             textAlign: 'justify',
-            fontFamily:"SemiBold",
             color:"#1687a7",
         },
         subtitle: {
@@ -87,44 +85,5 @@ const styles = StyleSheet.create(
     }
 );
 
-/* const styles = StyleSheet.create(
-    {
-        background: {
-            backgroundColor:"#FFF",
-            height:"100%"
-        },
-        title: {
-            paddingHorizontal: 8,
-            color: "#0e657e",
-            fontWeight: '300',
-            fontSize:26,
-            marginTop: 30,
-            paddingHorizontal: 20,
-            textAlign: 'center',
-            fontFamily:"SemiBold",
-            alignSelf:"center",
-        },
-        content: {
-            marginTop: 10,
-            textAlign: 'justify',
-            fontFamily:"SemiBold",
-            color:"#1687a7",
-        },
-        subtitle: {
-            fontSize:17,
-            padding: 10,
-            textAlign:'center',
-            opacity:0.6
-        },
-        image: {
-            width:"100%",
-            height:"36%",
-            marginTop: 30,
-            alignSelf:"center"
-        },
-        videos:{
-            paddingHorizontal: 20,
-        }
-    }) */
 
 export default Dormir

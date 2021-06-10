@@ -28,7 +28,7 @@ const Respiracion = () =>{
             }
 
             const { sound } = await Audio.Sound.createAsync(
-               /* require('../src/audios/' + track + '.mp3') */
+              /*  require('../src/audios/' + track + '.mp3')  */
             );
 
             setSound(sound);
@@ -93,24 +93,6 @@ return(
                 title="Primeros pasos"
                 />
             </TouchableWithoutFeedback>
-            {/* <TouchableWithoutFeedback onPress={() => playSound(1)}>
-                <Audios
-                num={3}
-                color="#e8f1fd"
-                duration="5 minutos"
-                title="Encuentra tu camino"
-                image = {imagen}
-                />
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => playSound(1)}>
-                <Audios
-                num={4}
-                color="#e5ffef"
-                duration="10 minutos"
-                title="Gracias a la vida"
-                image = {imagen}
-                />
-            </TouchableWithoutFeedback> */}
         </View>
     </ImageBackground>
     )
@@ -134,11 +116,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize:30,
         color: "#0e657e",
-        fontFamily:"SemiBold",
         alignSelf:"center",
     },
     subtitle: {
-        fontFamily:"SemiBold",
         marginHorizontal:55,
         fontSize: 17,
         textAlign:'center',

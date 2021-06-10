@@ -41,7 +41,6 @@ const Login = ({navigation}) =>{
             error.email=false;
         }
         setFormError(error);
-        console.log(formError.email);
     }; 
 
 return(
@@ -131,11 +130,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize:30,
-        fontFamily:"SemiBold",
         alignSelf:"center",
     },
     subtitle: {
-        fontFamily:"SemiBold",
         marginHorizontal:55,
         textAlign:'center',
         fontSize: 14,
@@ -147,10 +144,11 @@ const styles = StyleSheet.create({
         alignItems:"center",
         marginHorizontal:55,
         borderWidth:2,
+        height: 40,
         marginTop:17,
         paddingHorizontal:6,
         borderColor:"#d3e0ea",
-        borderRadius: 14,
+        borderRadius: 5,
         paddingVertical:2
     },
     marginText: {
@@ -167,12 +165,10 @@ const styles = StyleSheet.create({
     },
     textboton: {
         color:"white",
-        fontFamily:"SemiBold"
     },
     registrateBoton: {
         alignSelf:"center",
         color:"#1687a7",
-        fontFamily:"SemiBold",
         paddingVertical:5
     }
 })
