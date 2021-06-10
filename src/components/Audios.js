@@ -47,17 +47,14 @@ const styles = StyleSheet.create({
     },
     number: {
         fontSize:15,
-        fontFamily:"Bold"
     },
     text: {
         color:"#f58084",
         fontSize:15,
-        fontFamily:"Medium",
         paddingLeft:20
     },
     title: {
         color:"#345c74",
-        fontFamily:"Bold",
         fontSize:17,
         paddingLeft:20,
         width:180

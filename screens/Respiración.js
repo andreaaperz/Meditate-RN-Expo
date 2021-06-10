@@ -1,5 +1,6 @@
 import React,  { useState } from 'react'
-import {View, Text, StyleSheet ,Image, ImageBackground, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet ,Image, ImageBackground, TouchableWithoutFeedback} from 'react-native'
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Audios from '../src/components/Audios';
 import { Audio } from 'expo-av';
 
@@ -9,17 +10,12 @@ const Respiracion = () =>{
     const [isPlaying, setIsPlaying] = useState(false);
     const [imagen, setImagen] = useState(require('../src/images/pausa.png'));
 
-    let data = {
-        billie: require('../src/audios/billie.mp3'),
-        paramore: require('../src/audios/paramore.mp3'),
-    };
-
     let status = {
         play: require('../src/images/play.png'),
         pause: require('../src/images/pausa.png')
     };
 
-    var track = require('../src/audios/paramore.mp3');
+    var track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c";
 
     async function playSound(number) {
         if (currentSound != number){
@@ -27,19 +23,32 @@ const Respiracion = () =>{
 
             switch(number){
                 case 1:
-                    track = data.billie;
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-1.mp3?alt=media&token=4f338c51-543e-4764-a67a-9afc8ef38da7";
                     break; 
                 case 2:
-                    track = data.paramore;
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c";
+                    break;
+                case 3:
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-3.mp3?alt=media&token=c0d76043-d858-4b82-9931-ac5842b8c9ab";
+                    break;
+                case 4:
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-4.mp3?alt=media&token=27ea5365-cd10-4f3e-b11d-ed9472f85bf9";
+                    break;
+                case 5:
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-6.mp3?alt=media&token=84cc0569-e2cb-47e2-95a5-baaf0c525b04";
+                    break;
+                case 6:
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-5.mp3?alt=media&token=d5ba9dce-86ce-4301-82b2-3b3db8c766f0";
+                    break;
+                case 7:
+                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-7.mp3?alt=media&token=c5c895d4-fcd6-472f-a6c0-60f9cb7d1af5";
                     break;
                 default: 
-                    track = 'billie';
+                    track = 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c';
                     break;
             }
 
-            const { sound } = await Audio.Sound.createAsync(
-               track
-            );
+            const { sound } = await Audio.Sound.createAsync({ uri: track });
 
             setSound(sound);
 
@@ -86,24 +95,68 @@ return(
     <Text style={styles.subtitle}>
         "Cualquiera puede sostener el timón cuando el mar está en calma"
     </Text>
+    <ScrollView
+            vertical
+            style={styles.scrollCarousel}>
         <View style={styles.title}>
-            <TouchableWithoutFeedback onPress={() => playSound(1)}>
+            <TouchableOpacity onPress={() => playSound(1)}>
                 <Audios
                 num={1}
                 color="#fde6e6"
-                duration="28 minutos"
-                title="Introducción"
+                duration="Duración: 3:04"
+                title="Meditación para principiantes"
                 />
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => playSound(2)}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(2)}>
                 <Audios
                 num={2}
                 color="#f9e1fc"
-                duration="39 minutos"
-                title="Primeros pasos"
+                duration="Duración: 0:59"
+                title="Ejercicio respiración"
                 />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(3)}>
+                <Audios
+                num={3}
+                color="#e2f0cb"
+                duration="Duración: 2:10"
+                title="Música relajante"
+                />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(4)}>
+                <Audios
+                num={4}
+                color="#ffffcf"
+                duration="Duración: 3:34"
+                title="Música para meditar"
+                />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(5)}>
+                <Audios
+                num={5}
+                color="#ffdac1"
+                duration="Duración: 2:35"
+                title="Méditación rápida"
+                />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(6)}>
+                <Audios
+                num={6}
+                color="#d9ffff"
+                duration="Duración: 1:17"
+                title="Meditación controlada"
+                />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => playSound(7)}>
+                <Audios
+                num={7}
+                color="#fff5fb"
+                duration="Duración: 1:59"
+                title="Dar gracias"
+                />
+            </TouchableOpacity>
         </View>
+        </ScrollView>
     </ImageBackground>
     )
 }
