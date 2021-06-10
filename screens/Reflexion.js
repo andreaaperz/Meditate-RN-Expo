@@ -65,11 +65,9 @@ const styles = StyleSheet.create(
             width:140
         },
         topText: {
-            fontFamily:"ExtraBold",
             color:"#1687a7",
         }, 
         bottomText: {
-            fontFamily:"ExtraBold"
         },
         descriptionCard: {
             backgroundColor:"#0e657e",
@@ -78,7 +76,6 @@ const styles = StyleSheet.create(
             marginTop:20
         }, 
         title: {
-            fontFamily:"ExtraBold",
             fontSize:20,
             color:"#fff",
             marginBottom:10

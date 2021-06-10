@@ -7,9 +7,19 @@ const Respiracion = () =>{
     const [sound, setSound] = useState();
     const [currentSound, setCurrentSound] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [imagen, setImagen] = useState('pausa');
+    const [imagen, setImagen] = useState(require('../src/images/pausa.png'));
 
-    var track = "billie";
+    let data = {
+        billie: require('../src/audios/billie.mp3'),
+        paramore: require('../src/audios/paramore.mp3'),
+    };
+
+    let status = {
+        play: require('../src/images/play.png'),
+        pause: require('../src/images/pausa.png')
+    };
+
+    var track = require('../src/audios/paramore.mp3');
 
     async function playSound(number) {
         if (currentSound != number){
@@ -17,10 +27,10 @@ const Respiracion = () =>{
 
             switch(number){
                 case 1:
-                    track = 'billie';  
+                    track = data.billie;
                     break; 
                 case 2:
-                    track = 'paramore';  
+                    track = data.paramore;
                     break;
                 default: 
                     track = 'billie';
@@ -28,7 +38,7 @@ const Respiracion = () =>{
             }
 
             const { sound } = await Audio.Sound.createAsync(
-              /*  require('../src/audios/' + track + '.mp3')  */
+               track
             );
 
             setSound(sound);
@@ -38,7 +48,7 @@ const Respiracion = () =>{
     
             setIsPlaying(true);
             setCurrentSound(number);
-            setImagen('play');
+            setImagen(status.play);
 
         } else {
             if (isPlaying == false){
@@ -46,13 +56,13 @@ const Respiracion = () =>{
                 await sound.playAsync();  
         
                 setIsPlaying(true);
-                setImagen('play');
+                setImagen(status.play);
             } else {
                 sound.pauseAsync(); 
                 console.log('Pause'); 
                 setIsPlaying(false);
 
-                setImagen('pausa');
+                setImagen(status.pause);
             }
         }
     }
@@ -70,7 +80,7 @@ return(
     source={require('../src/images/back2.png')}
     style={{width:"100%",height:"100%"}}>
     <Image source ={require('../src/images/Pajaros.png')} style={styles.image}/> 
-    <Image /* source ={require('../src/images/' + imagen + '.png')} */ style={styles.play}/> 
+    <Image source ={imagen}  style={styles.play}/>
 
     <Text style={styles.title} >Respiración</Text>
     <Text style={styles.subtitle}>
@@ -100,15 +110,15 @@ return(
 
 const styles = StyleSheet.create({
     image: {
-        width: "100pt",
-        height:"100pt",
+        width: "41%",
+        height:"21%",
         borderRadius: 100,
         marginTop: 30,
         alignSelf:"center"
     },
     play: {
-        width: "100pt",
-        height:"100pt",
+        width: "41%",
+        height:"21%",
         alignSelf:"center",
         marginTop: 30,
         position: "absolute"

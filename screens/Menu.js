@@ -135,14 +135,12 @@ const styles = StyleSheet.create(
     title: {
       fontSize: 40,
       color: "#142850",
-      fontFamily: "RobotoBold",
     },
     subtitle: {
       fontSize: 15,
       paddingVertical: 5,
       paddingRight: 80,
       lineHeight: 22,
-      fontFamily: "RobotoRegular",
       color: "#0e657e",
     },
     scroll: { 
