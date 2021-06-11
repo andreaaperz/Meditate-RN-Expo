@@ -3,26 +3,33 @@ import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
 
 export default class Emotions extends React.Component{
     render(){
-        const {animo, fecha, imagen, color} = this.props
+        const {key, animo, fecha} = this.props
         var icono
-        switch(imagen){
-            case "feliz(2).png":
+        var color
+        switch(animo){
+            case "Feliz":
                 icono = require("../images/feliz(2).png")
+                color = "#61d96c";
                 break;
-            case "feliz(1).png":
+            case "Contento":
                 icono = require("../images/feliz(1).png")
+                color = "#aee5b3"
                 break;
-            case "esceptico.png":
+            case "Normal":
                 icono = require("../images/esceptico.png")
+                color = "#d2dff5"
                 break;
-            case "triste.png":
+            case "Triste":
                 icono = require("../images/triste.png")
+                color = "#769cdf"
                 break;
-            case "triste.png":
+            case "Deprimido":
                 icono = require("../images/triste(1).png")
+                color = "#204380"
                 break;
             default:
-                icono = "../images/informacion.png"
+                icono = require("../images/triste(1).png")
+                color = "#204380"
                 break;
         }
         return(
@@ -37,7 +44,7 @@ export default class Emotions extends React.Component{
                     backgroundColor: color,
                   }}>
                  <Image
-                     onPress={console.log("../images/" + imagen)}
+                     /* onPress={console.log("../images/" + imagen)} */
                      source={icono}
                      style={styles.bolitaImage}/>
                 </TouchableOpacity> 

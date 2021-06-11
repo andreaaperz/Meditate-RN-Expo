@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {StyleSheet, Text,View,Image, ImageBackground} from 'react-native';
 import Emotions from '../src/components/Emotions';
@@ -9,19 +9,77 @@ import 'firebase/firestore'
 const db = firebase.firestore(firebase);
 
 const Emociones = () =>{
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+      getEmotions();
+  }, []);
+
+  const getEmotions = async () => {
+    setList([]);
+    const itemsArray = [];
+    var user2 = firebase.auth().currentUser;
+    db.collection('detalleEmociones').where("idUsuario", "==", user2.uid)
+      .get()
+      .then((response) => {
+        response.forEach((doc) => {
+                itemsArray.push({
+                    id: doc.id,
+                    animo: doc.data().idEmocion,
+                    fecha: doc.data().fecha
+                }) 
+            }) 
+            setList(itemsArray);
+          });
+  };
 
   const addEmotion = (idEmocion) => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    console.log(today);
+
         firebase.auth().onAuthStateChanged(user =>{
             db.collection('detalleEmociones').add({
                 idEmocion: idEmocion,
                 idUsuario: user.uid,
+                fecha: today
             }).then(()=>{
+                getEmotions();
                 console.log('agregado');
             }).catch(err=>{
                 console.log(err);
             }) 
         })  
-    }
+  }
+
+  const daleteBirthday = (birthday) => {
+    Alert.alert(
+      'Eliminar cumpleaños',
+      `¿Estas seguro de eliminar el cumpleaños de ${birthday.name} ${birthday.lastname}`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          onPress: () => {
+            db.collection(user.uid)
+              .doc(birthday.id)
+              .delete()
+              .then(() => {
+                setReloadData();
+              });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
 return( 
   <ImageBackground
@@ -34,7 +92,7 @@ return(
         <View
             style={styles.scroll}>
             <TouchableOpacity 
-              onPress={()=> addEmotion('ulzmnx4Sy4WOxm1CnH18')}
+              onPress={()=> addEmotion('Deprimido')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#204380'}}>
               <Image
                 source={require("../src/images/triste(1).png")}
@@ -42,7 +100,7 @@ return(
             </TouchableOpacity>
 
             <TouchableOpacity
-                onPress={()=> addEmotion('rEX3GDHzQrfnnNmDxZzX')}
+                onPress={()=> addEmotion('Triste')}
                 style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#769cdf'}}>
               <Image
                 source={require("../src/images/triste.png")}
@@ -50,7 +108,7 @@ return(
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={()=> addEmotion('RAuouIcMmzw1C8GmtYuR')}
+              onPress={()=> addEmotion('Normal')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#d2dff5'}}>
               <Image
                 source={require("../src/images/esceptico.png")}
@@ -58,7 +116,7 @@ return(
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={()=> addEmotion('49jOrAlUalFQmwPJRfQG')}
+              onPress={()=> addEmotion('Contento')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#aee5b3'}}>
               <Image
                 source={require("../src/images/feliz(1).png")}
@@ -66,7 +124,7 @@ return(
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={()=> addEmotion('WNIDCvQQ2gSnquZdILib')}
+              onPress={()=> addEmotion('Feliz')}
               style={{alignItems: "center", justifyContent: "center", height: 66, width: 66, marginHorizontal: 2, marginTop: 30, borderRadius: 50, backgroundColor: '#61d96c'}}>
               <Image
                 source={require("../src/images/feliz(2).png")}
@@ -78,28 +136,13 @@ return(
           <Text style={styles.historial}>Historial</Text>
           
           <View style={styles.history}>
-                <Emotions
-                    animo="Feliz"
-                    fecha="01/01/2021"
-                    imagen="feliz(2).png"
-                    color="#61d96c" />
-                <Emotions
-                    animo="Feliz"
-                    fecha="28/01/2021"
-                    imagen="feliz(2).png"
-                    color="#61d96c" />
-                <Emotions
-                    animo="Triste"
-                    fecha="03/02/2021"
-                    imagen="esceptico.png"
-                    color="#769cdf" />
-                <Emotions
-                    animo="Deprimido"
-                    fecha="04/02/2021"
-                    imagen="triste.png"
-                    color="#204380" />
+                 {list.map((item, index) => (
+                    <Emotions
+                        key = {index}
+                        animo= {item.animo}
+                        fecha={item.fecha} />
+                ))} 
             </View> 
-          
          </ImageBackground>
          
     );

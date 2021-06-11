@@ -10,10 +10,11 @@ import Reflexion from './screens/Reflexion';
 import Emociones from './screens/Emociones';
 import Dormir from './screens/Dormir';
 import Actualizar from './screens/Actualizar';
+import { LogBox  } from 'react-native';
 
 const Stack = createStackNavigator();
 
-//LogBox.ignoreAllLogs(disable)
+//LogBox.ignoreAllLogs(true)
 
 const myApp = () =>{
   return(
