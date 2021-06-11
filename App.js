@@ -13,7 +13,7 @@ import Actualizar from './screens/Actualizar';
 
 const Stack = createStackNavigator();
 
-//LogBox.ignoreWarnings();
+//LogBox.ignoreAllLogs(disable)
 
 const myApp = () =>{
   return(

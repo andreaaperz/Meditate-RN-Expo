@@ -31,21 +31,17 @@ const Menu = ({navigation}) =>{
         style={styles.background}>
         <View style={styles.mainRow}>
         </View>
-        
         <View style={styles.container}>
           <Text style={styles.title} >
             Tu lugar...
           </Text>
-
           <Text style={styles.subtitle}>
             Aquí encontrarás todo lo necesario para empezar tu camino
           </Text>
-
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={styles.scroll}>
-
             <TouchableOpacity
               style={styles.bolita}
               onPress = {() => logout()} title="Next screen 3">
@@ -53,7 +49,6 @@ const Menu = ({navigation}) =>{
                 source={require("../src/images/logout.png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
-
             <TouchableOpacity
               style={styles.bolita}
               onPress = {() => navigation.navigate('actualizar')} title="Next screen 3">
@@ -77,7 +72,6 @@ const Menu = ({navigation}) =>{
                     style={styles.cardImage}/>
               </TouchableOpacity>
             </View>
-
             <View 
               style={styles.card}>
                 <TouchableOpacity
@@ -86,9 +80,7 @@ const Menu = ({navigation}) =>{
                 source={require("../src/images/reflexion.png")}
                 style={styles.cardImage}/>
                 </TouchableOpacity>
-
             </View>
-
             <View style={styles.card}>
               <TouchableOpacity
                 onPress = {() => navigation.navigate('emociones')} title="Next screen 3">
@@ -96,9 +88,7 @@ const Menu = ({navigation}) =>{
                   source={require("../src/images/Emociones.png")}
                   style={styles.cardImage}/>
               </TouchableOpacity>
-              
             </View>
-
             <View style={styles.card}>
               <TouchableOpacity
                 onPress = {() => navigation.navigate('dormir')} title="Next screen 3"
@@ -107,9 +97,7 @@ const Menu = ({navigation}) =>{
                 source={require("../src/images/sueño.png")}
                 style={styles.cardImage}/>
               </TouchableOpacity>
-              
             </View>
-
           </ScrollView>
         </View>
       </ImageBackground>

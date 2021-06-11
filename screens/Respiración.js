@@ -10,12 +10,22 @@ const Respiracion = () =>{
     const [isPlaying, setIsPlaying] = useState(false);
     const [imagen, setImagen] = useState(require('../src/images/pausa.png'));
 
+    let audios = {
+        uno: require('../src/audios/audio-1.mp3'),
+        dos: require('../src/audios/audio-2.mp3'),
+        tres: require('../src/audios/audio-3.mp3'),
+        cuatro: require('../src/audios/audio-4.mp3'),
+        cinco: require('../src/audios/audio-5.mp3'),
+        seis: require('../src/audios/audio-6.mp3'),
+        siete: require('../src/audios/audio-7.mp3'),
+    };
+
     let status = {
         play: require('../src/images/play.png'),
         pause: require('../src/images/pausa.png')
     };
 
-    var track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c";
+    var track = require('../src/audios/audio-1.mp3');
 
     async function playSound(number) {
         if (currentSound != number){
@@ -23,28 +33,28 @@ const Respiracion = () =>{
 
             switch(number){
                 case 1:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-1.mp3?alt=media&token=4f338c51-543e-4764-a67a-9afc8ef38da7";
+                    track = audios.uno;
                     break; 
                 case 2:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c";
+                    track = audios.dos;
                     break;
                 case 3:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-3.mp3?alt=media&token=c0d76043-d858-4b82-9931-ac5842b8c9ab";
+                    track = audios.tres;
                     break;
                 case 4:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-4.mp3?alt=media&token=27ea5365-cd10-4f3e-b11d-ed9472f85bf9";
+                    track = audios.cuatro;
                     break;
                 case 5:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-6.mp3?alt=media&token=84cc0569-e2cb-47e2-95a5-baaf0c525b04";
+                    track = audios.seis;
                     break;
                 case 6:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-5.mp3?alt=media&token=d5ba9dce-86ce-4301-82b2-3b3db8c766f0";
+                    track = audios.cinco;
                     break;
                 case 7:
-                    track = "https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-7.mp3?alt=media&token=c5c895d4-fcd6-472f-a6c0-60f9cb7d1af5";
+                    track = audios.siete;
                     break;
                 default: 
-                    track = 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/audio-2.mp3?alt=media&token=23457bb7-5479-4422-b598-b6bd23acfa6c';
+                    track = audios.uno;
                     break;
             }
 

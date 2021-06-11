@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize:30,
         alignSelf:"center",
+        color: "#0e657e"
     },
     subtitle: {
         marginHorizontal:55,

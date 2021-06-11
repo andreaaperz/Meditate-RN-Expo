@@ -10,13 +10,13 @@ return(
     <ScrollView
             vertical
             style={styles.scrollCarousel}>
-        <Image source ={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/day.png?alt=media&token=0a1ce80f-3696-474e-9790-ca4496c3de4b'}} style={styles.image}/> 
+        <Image source ={require('../src/images/day.png')} style={styles.image}/> 
         <Text style={styles.title} >"El descanso pertenece al trabajo como los párpados a los ojos..."</Text>
         <Text style={styles.subtitle}>Mejora tu sueño con los siguientes videos: </Text>
         
         <Text style={styles.videoTitle}>1. Higiene de sueño</Text>
         <Video
-            source={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/Higiene.mp4?alt=media&token=59c9b5f8-02de-4e8b-ab27-f0489c223905'}}
+            source={require('../src/videos/Higiene.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
@@ -27,7 +27,7 @@ return(
         />
         <Text style={styles.videoTitle}>2. Música para dormir</Text>
         <Video
-            source={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/Musica.mp4?alt=media&token=e8191179-80fe-41f2-bd2a-fbb177e46d98'}}
+            source={require('../src/videos/Musica.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
@@ -38,7 +38,7 @@ return(
         />
          <Text style={styles.videoTitle}>3. Técnicas de relajación</Text>
         <Video
-            source={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/Tecnicas.mp4?alt=media&token=bf394ae3-6440-4d32-92ae-931c07876831'}}
+            source={require('../src/videos/Tecnicas.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
@@ -49,7 +49,7 @@ return(
         />
         <Text style={styles.videoTitle}>4. Las mejores posiciones para dormir</Text>
         <Video
-            source={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/Posiciones.mp4?alt=media&token=6f9f465f-3d0d-4afc-a86a-2f396f0e96ad'}}
+            source={require('../src/videos/Posiciones.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
@@ -60,7 +60,7 @@ return(
         />
         <Text style={styles.videoTitle}>5. Método japonés para relajarse</Text>
         <Video
-            source={{uri: 'https://firebasestorage.googleapis.com/v0/b/react-native-ded95.appspot.com/o/Video1.mp4?alt=media&token=f1fb1ac0-32f6-4356-9ae6-da2073fc6005'}}
+            source={require('../src/videos/Video1.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}

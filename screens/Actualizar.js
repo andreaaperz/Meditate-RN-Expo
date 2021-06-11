@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, Text,View,Image} from 'react-native';
+import {StyleSheet, Text,View,Image, Alert} from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
 import RNPickerSelect from 'react-native-picker-select';
 import { validateEmail } from '../src/utils/Validation';
@@ -10,7 +10,6 @@ import 'firebase/auth'
 const db = firebase.firestore(firebase);
 
 const Actualizar = ({navigation}) =>{
-    
     const initialState = {
         id: "",
         nombre: "",
@@ -28,6 +27,11 @@ const Actualizar = ({navigation}) =>{
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
   };
+
+  const setPickerValue = (valor, prop)=>{
+      setPicker(valor);
+      setUser({...user, [prop]:valor})
+  }
 
   useEffect(() => {
     getUserId();
@@ -56,10 +60,10 @@ const Actualizar = ({navigation}) =>{
         error.correo = true;
         setWarning('Correo inválido');
     }
-    /* else if (user.contra.length < 6 ) {
+    else if (user.contra && user.contra.length < 6 ) {
         error.contra = true;
         setWarning('Contraseña débil. Intenta con otra.');
-    }  */
+    } 
     else if (user.edad < 5 || user.edad > 99) {
         error.edad = true;
         setWarning('Rango de edad no válido');
@@ -115,9 +119,12 @@ const Actualizar = ({navigation}) =>{
 
 return(
         <View style={styles.background}>
-            <Image source ={require('../src/images/flor.png')} style={styles.image}/> 
+            <Image source ={require('../src/images/editar-lapiz.png')} style={styles.image}/> 
             <Text style={styles.title}> 
-                ACTUALIZAR
+                Actualizar
+            </Text>
+            <Text style={styles.subtitle}> 
+                Edita tus datos
             </Text>
             <Text style={styles.warning}> 
                 {warning}
@@ -152,13 +159,13 @@ return(
                     keyboardType="numeric"/>
             </View>
             <RNPickerSelect
-                onValueChange={(value) => setPicker(value)}
-                value={user.genero}
+                onValueChange={(value) => setPickerValue(value, "genero")}
                 placeholder={{
                     label: 'Mujer',
                     value: 'mujer',
                     color: 'purple',
                   }}
+                  value={user.genero || ''}
                   style={{
                     ...pickerSelectStyles,
                     iconContainer: {
@@ -188,8 +195,10 @@ return(
 
 const styles = StyleSheet.create({
     image:{
-        width:"34%",
-        height:"20%",
+        width: "31%",
+        height:"16%",
+        marginTop: 20,
+        marginBottom: 20,
         alignSelf:"center"
     },
     errorIn:{
@@ -206,6 +215,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize:30,
+        color: "#0e657e",
         alignSelf:"center",
     }, 
     subtitle: {
