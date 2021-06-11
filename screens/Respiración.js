@@ -58,7 +58,7 @@ const Respiracion = () =>{
                     break;
             }
 
-            const { sound } = await Audio.Sound.createAsync({ uri: track });
+            const { sound } = await Audio.Sound.createAsync( track );
 
             setSound(sound);
 

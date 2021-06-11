@@ -24,6 +24,8 @@ const Actualizar = ({navigation}) =>{
   const [warning, setWarning] = useState('');
   const [picker, setPicker] = useState();
 
+  
+
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
   };
@@ -99,7 +101,7 @@ const Actualizar = ({navigation}) =>{
     setFormError(error);
   };
 
-   const deleteU = async () => {
+   /* const deleteU = async () => {
     const currentU = db.collection("usuarios").doc(user.id);
     await currentU.delete()
      .then(()=>{
@@ -115,7 +117,40 @@ const Actualizar = ({navigation}) =>{
     }).catch((err)=>{
         console.log(err)
     });
-  }; 
+  };  */
+
+  const deleteU = () => {
+    Alert.alert(
+      'Espera',
+      `¿Estas seguro de querer eliminar tu cuenta?`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          onPress: () => {
+            const currentU = db.collection("usuarios").doc(user.id);
+            currentU.delete()
+             .then(()=>{
+                var user2 = firebase.auth().currentUser;
+                user2.delete().then(function() {
+                    console.log("Se eliminó correctamente");
+                }).catch(function(error) {
+                    console.log(error)
+                });
+            }).then(()=>{
+                navigation.navigate('login')
+            }).catch((err)=>{
+                console.log(err)
+            });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
 return(
         <View style={styles.background}>

@@ -13,10 +13,9 @@ return(
         <Image source ={require('../src/images/day.png')} style={styles.image}/> 
         <Text style={styles.title} >"El descanso pertenece al trabajo como los párpados a los ojos..."</Text>
         <Text style={styles.subtitle}>Mejora tu sueño con los siguientes videos: </Text>
-        
-        <Text style={styles.videoTitle}>1. Higiene de sueño</Text>
+        <Text style={styles.videoTitle}>1. Las mejores posiciones para dormir</Text>
         <Video
-            source={require('../src/videos/Higiene.mp4')}
+            source={require('../src/videos/Posiciones.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
@@ -36,7 +35,7 @@ return(
             volume={1.0}
             style={styles.video}
         />
-         <Text style={styles.videoTitle}>3. Técnicas de relajación</Text>
+        <Text style={styles.videoTitle}>3. Técnicas de relajación</Text>
         <Video
             source={require('../src/videos/Tecnicas.mp4')}
             useNativeControls
@@ -47,9 +46,9 @@ return(
             volume={1.0}
             style={styles.video}
         />
-        <Text style={styles.videoTitle}>4. Las mejores posiciones para dormir</Text>
+        <Text style={styles.videoTitle}>4. Higiene de sueño</Text>
         <Video
-            source={require('../src/videos/Posiciones.mp4')}
+            source={require('../src/videos/Higiene.mp4')}
             useNativeControls
             resizeMode="cover"
             shouldPlay = {false}
