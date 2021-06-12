@@ -1,7 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleSheet, View,ImageBackground, Image,Text} from 'react-native';
+import {ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import firebase from '../src/utils/Firebase';
+import 'firebase/firestore'
+
+const db = firebase.firestore(firebase);
 
 const Reflexion = () =>{
+    const initialState = {
+        id: "",
+        duracion: "",
+        personas: "",
+        titulo: "",
+        texto1: "",
+        texto2: "",
+        texto3: ""
+        };
+
+    const [content, setContent] = useState(initialState);
+    const [number, setNumber] = useState(1);
+
+    useEffect(() => {
+        getContent(true);
+        
+      }, []);
+    
+      const getContent = (value) => {  
+        if(number == 3){
+            setNumber(1)
+        } else {
+            setNumber(number + 1)
+        }
+        setContent(initialState);
+        db.collection('reflexion').doc(number.toString())
+            .get()
+            .then
+                (datos=>{
+                    setContent({ ...datos.data(), id: datos.id});
+                });
+      };
+
+
 return(
     <View style={styles.background}> 
         <ImageBackground 
@@ -12,27 +51,27 @@ return(
         <View style={styles.row}>
         <View style={styles.info}>
             <Text style={styles.topText}>Duración</Text>
-            <Text style={styles.bottomText}>25 minutos</Text>
+            <Text style={styles.bottomText}>{content.duracion}</Text>
         </View>
 
         <View style={styles.info}>
             <Text style={styles.topText}>Personas</Text>
-            <Text style={styles.bottomText}>1</Text>
+            <Text style={styles.bottomText}>{content.personas}</Text>
         </View>
 
+        <TouchableOpacity 
+            style={styles.info2}
+            onPress={()=>getContent(true)}>
+            <Text style={{color: '#ff73df', fontSize: 50}}>→</Text>
+        </TouchableOpacity>
+
         </View>
-        <View style={styles.descriptionCard}>
-            <Text style={styles.title}>Práctica del agradecimiento antes de ir a dormir</Text>
-            <Text style={styles.content}> 
-            Realiza una lista con aquellas cosas por las que estés agradecido. Cada día las leerás e irás añadiendo todo lo que te vaya ocurriendo, tanto lo bueno como lo no tan bueno.
-            </Text>
-            <Text style={styles.content}>
-            Agradecer incluso las situaciones más difíciles y verlas como oportunidades de crecimiento, nos hará más positivos y más resilientes.
-            </Text>
-            <Text style={styles.content}>
-            Con la gratitud se obtiene una elevación de la vibración además de un efecto exponencial, ya que cada vez tendrás más motivos para dar las gracias. Puedes empezar hoy mismo a comprobarlo.
-            </Text>
-        </View>
+        <ScrollView vertical style={styles.descriptionCard}>
+            <Text style={styles.title}>{content.titulo}</Text>
+            <Text style={styles.content}> {content.texto1} </Text>
+            <Text style={styles.content}> {content.texto2} </Text>
+            <Text style={styles.content}> {content.texto3} </Text>
+        </ScrollView>
     </View>
     );
 }
@@ -57,12 +96,19 @@ const styles = StyleSheet.create(
             marginTop:20
         },
         info: {
-            backgroundColor:"#ecfbff",
+            backgroundColor:"#cbe1e7",
             marginLeft: 15,
             paddingVertical:10,
             paddingHorizontal:10,
             borderRadius:8,
-            width:140
+            width:90
+        },
+        info2: {
+            marginLeft: 15,
+            paddingVertical:10,
+            paddingHorizontal:10,
+            borderRadius:8,
+            width:90
         },
         topText: {
             color:"#1687a7",

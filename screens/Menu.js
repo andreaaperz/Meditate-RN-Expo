@@ -109,7 +109,6 @@ const styles = StyleSheet.create(
     background:{ 
       width: "100%",
       height: "100%",
-      marginTop: 50,
     },
     mainRow: {
       flexDirection: "row",

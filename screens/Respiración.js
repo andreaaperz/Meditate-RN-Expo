@@ -97,7 +97,7 @@ const Respiracion = () =>{
 return(
 <ImageBackground
     source={require('../src/images/back2.png')}
-    style={{width:"100%",height:"100%", marginTop: 50}}>
+    style={{width:"100%",height:"100%"}}>
     <Image source ={require('../src/images/Pajaros.png')} style={styles.image}/> 
     <Image source ={imagen}  style={styles.play}/>
 

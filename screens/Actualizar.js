@@ -97,7 +97,7 @@ const Actualizar = ({navigation}) =>{
             setWarning(err);
         })
     }
-    //setUser(initialState);
+    setUser(initialState);
     setFormError(error);
   };
 
@@ -203,10 +203,6 @@ return(
                   value={user.genero || ''}
                   style={{
                     ...pickerSelectStyles,
-                    iconContainer: {
-                      top: 20,
-                      right: 10,
-                    },
                     placeholder: {
                       color: '#1687a7',
                       fontSize: 14,
@@ -247,7 +243,6 @@ const styles = StyleSheet.create({
     background: {
         backgroundColor:"#FFF",
         height:"100%",
-        marginTop: 50
     },
     title: {
         fontSize:30,
