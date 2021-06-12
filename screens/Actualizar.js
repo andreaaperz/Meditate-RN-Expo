@@ -230,8 +230,8 @@ return(
 
 const styles = StyleSheet.create({
     image:{
-        width: "31%",
-        height:"16%",
+        width: 140,
+        height: 140,
         marginTop: 20,
         marginBottom: 20,
         alignSelf:"center"
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor:"#FFF",
-        height:"100%"
+        height:"100%",
+        marginTop: 50
     },
     title: {
         fontSize:30,

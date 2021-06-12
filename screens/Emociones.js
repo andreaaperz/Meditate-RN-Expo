@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import {StyleSheet, Text,View,Image, ImageBackground} from 'react-native';
 import Emotions from '../src/components/Emotions';
 import firebase from '../src/utils/Firebase';
@@ -83,8 +83,8 @@ const Emociones = () =>{
 
 return( 
   <ImageBackground
-  source={require("../src/images/ola.png")}
-  style={styles.background}>
+    source={require("../src/images/ola.png")}
+    style={styles.background}>
 
         <Text style={styles.title} >Cada día es una nueva experiencia</Text>
         <Text style={styles.subtitle}>¿Cómo te sientes el día de hoy?</Text>
@@ -135,23 +135,26 @@ return(
 
           <Text style={styles.historial}>Historial</Text>
           
-          <View style={styles.history}>
-                 {list.map((item, index) => (
-                    <Emotions
-                        key = {index}
-                        animo= {item.animo}
-                        fecha={item.fecha} />
-                ))} 
-            </View> 
-         </ImageBackground>
-         
+          
+            <ScrollView
+                vertical
+                style={styles.history}>
+                    {list.map((item, index) => (
+                        <Emotions
+                            key = {index}
+                            animo= {item.animo}
+                            fecha={item.fecha} />
+                    ))} 
+                </ScrollView>
+         </ImageBackground>    
     );
 }
 
 const styles = StyleSheet.create({
     background: {
       height: '100%',
-      width: "100%"
+      width: "100%",
+      marginTop: 50
     },
     scroll: { 
       flexDirection:"row",

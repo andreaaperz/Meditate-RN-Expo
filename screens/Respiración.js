@@ -97,7 +97,7 @@ const Respiracion = () =>{
 return(
 <ImageBackground
     source={require('../src/images/back2.png')}
-    style={{width:"100%",height:"100%"}}>
+    style={{width:"100%",height:"100%", marginTop: 50}}>
     <Image source ={require('../src/images/Pajaros.png')} style={styles.image}/> 
     <Image source ={imagen}  style={styles.play}/>
 
@@ -173,15 +173,15 @@ return(
 
 const styles = StyleSheet.create({
     image: {
-        width: "41%",
-        height:"21%",
+        width: 190,
+        height: 190,
         borderRadius: 100,
         marginTop: 30,
         alignSelf:"center"
     },
     play: {
-        width: "41%",
-        height:"21%",
+        width: 190,
+        height: 190,
         alignSelf:"center",
         marginTop: 30,
         position: "absolute"

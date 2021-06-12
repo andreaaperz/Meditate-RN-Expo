@@ -91,7 +91,7 @@ const styles = StyleSheet.create(
             justifyContent: 'center'
         }, 
         scrollCarousel: { 
-            marginTop: 2,
+            marginTop: 50,
             backgroundColor:"#FFF",
             marginBottom: 20
           },

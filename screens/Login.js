@@ -21,7 +21,7 @@ const Login = ({navigation}) =>{
             firebase.auth().signInWithEmailAndPassword(formData.email,formData.password)
             .then(()=>{
                 console.log("ok");
-                navigation.navigate('menu');
+                navigation.replace('menu');
             })
             .catch((err)=>{
                 var error = messageError(err.code);

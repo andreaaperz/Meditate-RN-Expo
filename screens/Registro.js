@@ -144,8 +144,8 @@ function defaultValue() {
 
 const styles = StyleSheet.create({
     image:{
-        width:"34%",
-        height:"20%",
+        width: 140,
+        height: 140,
         alignSelf:"center"
     },
     error:{
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor:"#FFF",
-        height:"100%"
+        height:"100%",
+        marginTop: 50
     },
     title: {
         fontSize:30,

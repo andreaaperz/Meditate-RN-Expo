@@ -20,14 +20,14 @@ const myApp = () =>{
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name = "login" component={login} />
-        <Stack.Screen name = "registro" component = {Registro}/>
-        <Stack.Screen name = "menu" component = {Menu}/>
-        <Stack.Screen name = "respiracion" component = {Respiracion}/>
-        <Stack.Screen name = "reflexion" component = {Reflexion}/>
-        <Stack.Screen name = "dormir" component = {Dormir}/>
-        <Stack.Screen name = "emociones" component = {Emociones}/>
-        <Stack.Screen name = "actualizar" component = {Actualizar}/>
+        <Stack.Screen name = "login" component={login} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "registro" component = {Registro} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "menu" component = {Menu} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "respiracion" component = {Respiracion} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "reflexion" component = {Reflexion} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "dormir" component = {Dormir} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "emociones" component = {Emociones} options = {{ headerShown: false}}/>
+        <Stack.Screen name = "actualizar" component = {Actualizar} options = {{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
