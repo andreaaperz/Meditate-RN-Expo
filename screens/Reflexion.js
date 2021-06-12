@@ -7,6 +7,12 @@ import 'firebase/firestore'
 const db = firebase.firestore(firebase);
 
 const Reflexion = () =>{
+    let image = {
+        uno: require('../src/images/lago.jpg'),
+        dos: require('../src/images/reflexion2.jpg'),
+        tres: require('../src/images/reflexion3.jpg')
+    };
+
     const initialState = {
         id: "",
         duracion: "",
@@ -14,37 +20,52 @@ const Reflexion = () =>{
         titulo: "",
         texto1: "",
         texto2: "",
-        texto3: ""
+        texto3: "",
+        image: image.uno
         };
 
     const [content, setContent] = useState(initialState);
     const [number, setNumber] = useState(1);
 
+   
+
     useEffect(() => {
-        getContent(true);
+        getContent();
         
       }, []);
     
-      const getContent = (value) => {  
+      const getContent = () => {  
         if(number == 3){
             setNumber(1)
         } else {
             setNumber(number + 1)
         }
-        setContent(initialState);
         db.collection('reflexion').doc(number.toString())
             .get()
             .then
                 (datos=>{
-                    setContent({ ...datos.data(), id: datos.id});
+                    switch(datos.id){
+                        case '1':
+                            setContent({ ...datos.data(), id: datos.id, image: image.uno})
+                            console.log(content);
+                            break;
+                        case '2':
+                            setContent({ ...datos.data(), id: datos.id, image: image.dos})
+                            break;
+                        case '3':
+                            setContent({ ...datos.data(), id: datos.id, image: image.tres})
+                            break;
+                        default:
+                            setContent({ ...datos.data(), id: datos.id, image: image.uno})
+                            break;
+                    }
                 });
       };
-
 
 return(
     <View style={styles.background}> 
         <ImageBackground 
-            source={require('../src/images/lago.jpg')} 
+            source={content.image} 
             style={styles.backgroundImage}>
         </ImageBackground>
                    
@@ -61,8 +82,8 @@ return(
 
         <TouchableOpacity 
             style={styles.info2}
-            onPress={()=>getContent(true)}>
-            <Text style={{color: '#ff73df', fontSize: 50}}>→</Text>
+            onPress={()=>getContent()}>
+            <Text style={{color: '#ff73df', fontSize: 40}}>→</Text>
         </TouchableOpacity>
 
         </View>
@@ -101,14 +122,16 @@ const styles = StyleSheet.create(
             paddingVertical:10,
             paddingHorizontal:10,
             borderRadius:8,
-            width:90
+            width:90,
+            height: 60
         },
         info2: {
             marginLeft: 15,
-            paddingVertical:10,
-            paddingHorizontal:10,
+            paddingVertical:5,
+            paddingHorizontal:5,
             borderRadius:8,
-            width:90
+            width:90,
+            height: 60
         },
         topText: {
             color:"#1687a7",

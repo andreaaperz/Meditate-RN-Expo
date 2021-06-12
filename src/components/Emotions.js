@@ -3,7 +3,7 @@ import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
 
 export default class Emotions extends React.Component{
     render(){
-        const {key, animo, fecha} = this.props
+        const {animo, fecha, onPress} = this.props
         var icono
         var color
         switch(animo){
@@ -33,7 +33,7 @@ export default class Emotions extends React.Component{
                 break;
         }
         return(
-            <TouchableOpacity style={styles.row}>
+            <TouchableOpacity style={styles.row} onPress ={onPress}>
                 <TouchableOpacity
                  style={{
                     alignItems: "center",

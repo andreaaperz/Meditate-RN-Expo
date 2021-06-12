@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import {StyleSheet, Text,View,Image, ImageBackground} from 'react-native';
+import {StyleSheet, Text,View,Image, ImageBackground, Alert} from 'react-native';
 import Emotions from '../src/components/Emotions';
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
@@ -15,7 +15,7 @@ const Emociones = () =>{
       getEmotions();
   }, []);
 
-  const getEmotions = async () => {
+  const getEmotions = () => {
     setList([]);
     const itemsArray = [];
     var user2 = firebase.auth().currentUser;
@@ -56,10 +56,10 @@ const Emociones = () =>{
         })  
   }
 
-  const daleteBirthday = (birthday) => {
+  const deleteEmotion = (emotion) => {
     Alert.alert(
-      'Eliminar cumpleaños',
-      `¿Estas seguro de eliminar el cumpleaños de ${birthday.name} ${birthday.lastname}`,
+      'Eliminar',
+      `¿Estas seguro de querer eliminar esta emoción?`,
       [
         {
           text: 'Cancelar',
@@ -68,14 +68,16 @@ const Emociones = () =>{
         {
           text: 'Eliminar',
           onPress: () => {
-            db.collection(user.uid)
-              .doc(birthday.id)
+            db.collection("detalleEmociones")
+              .doc(emotion)
               .delete()
               .then(() => {
-                setReloadData();
-              });
+                getEmotions();
+              }).catch((err)=>{
+                console.log(err)
+              })
           },
-        },
+        }, 
       ],
       {cancelable: false},
     );
@@ -130,11 +132,10 @@ return(
                 source={require("../src/images/feliz(2).png")}
                 style={styles.bolitaImage}/>
             </TouchableOpacity>
-            
+  
           </View>
 
           <Text style={styles.historial}>Historial</Text>
-          
           
             <ScrollView
                 vertical
@@ -143,7 +144,8 @@ return(
                         <Emotions
                             key = {index}
                             animo= {item.animo}
-                            fecha={item.fecha} />
+                            fecha={item.fecha}
+                            onPress={()=>deleteEmotion(item.id)}/>
                     ))} 
                 </ScrollView>
          </ImageBackground>    
@@ -153,8 +155,7 @@ return(
 const styles = StyleSheet.create({
     background: {
       height: '100%',
-      width: "100%",
-      marginTop: 50
+      width: "100%"
     },
     scroll: { 
       flexDirection:"row",
