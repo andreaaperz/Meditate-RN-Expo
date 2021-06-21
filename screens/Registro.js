@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text,View,Image, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { validateEmail } from '../src/utils/Validation';
 import firebase from '../src/utils/Firebase';
@@ -8,6 +8,7 @@ import 'firebase/firestore'
 const db = firebase.firestore(firebase);
 
 const Registro = ({navigation}) =>{
+    
     const [formData, setFormData] = useState(defaultValue);
     const [formError, setFormError] = useState({});
     const [picker, setPicker] = useState('mujer');
@@ -103,7 +104,6 @@ const Registro = ({navigation}) =>{
             </View>
              <RNPickerSelect
                 onValueChange={(value) => setPicker(value)}
-                /* value='mujer' */
                 placeholder={{
                     label: 'Mujer',
                     value: 'mujer',
@@ -220,9 +220,9 @@ const pickerSelectStyles = StyleSheet.create({
       borderColor: '#d3e0ea',
       borderRadius: 4,
       color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
+      paddingRight: 30, 
     },
-   /*  inputAndroid: {
+      inputAndroid: {
       fontSize: 16,
       paddingHorizontal: 10,
       paddingVertical: 8,
@@ -230,8 +230,8 @@ const pickerSelectStyles = StyleSheet.create({
       borderColor: 'purple',
       borderRadius: 8,
       color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
-    }, */
+      paddingRight: 30, 
+    }, 
   });
  
 export default Registro

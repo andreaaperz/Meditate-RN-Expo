@@ -4,40 +4,36 @@ import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
 
-const Menu = ({navigation}) =>{
+const Menu = ({navigation}) => {
+  const [user, setUsrID] = useState ("");
+
+  useEffect(() => { 
+    var usuario = "";
+    firebase.auth().onAuthStateChanged(cred => {
+        usuario = cred;
+        setUsrID(usuario);
+    });
+  }); 
 
   const logout = ()=>{
-    firebase.auth().signOut().then(()=>{
+    firebase.auth().signOut().then(() => {
       navigation.navigate('login')
     })
   }
 
-  /* const [usrId, setUsrID] = useState('');
-
-  const getUserId = async () => {
-    firebase.auth().onAuthStateChanged(cred =>{
-        setUsrID(cred.uid)
-    });
-    console.log(usrId);
-  };
-
-  useEffect(() => {
-    getUserId();
-  }, []); */
-
-    return(
+  return(
       <ImageBackground
         source={require("../src/images/imagen.jpg")}
         style={styles.background}>
         <View style={styles.mainRow}>
         </View>
         <View style={styles.container}>
-          <Text style={styles.title} >
-            Tu lugar...
-          </Text>
-          <Text style={styles.subtitle}>
-            Aquí encontrarás todo lo necesario para empezar tu camino
-          </Text>
+            <Text style={styles.title} >
+                Tu lugar...
+            </Text>
+            <Text style={styles.subtitle}>
+                Aquí encontrarás todo lo necesario para empezar tu camino
+            </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -51,7 +47,7 @@ const Menu = ({navigation}) =>{
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.bolita}
-              onPress = {() => navigation.navigate('actualizar')} title="Next screen 3">
+              onPress = {() => navigation.navigate('actualizar', {user: user})} title="Next screen 3">
               <Image
                 source={require("../src/images/user(2).png")}
                 style={styles.bolitaImage}/>
@@ -83,7 +79,7 @@ const Menu = ({navigation}) =>{
             </View>
             <View style={styles.card}>
               <TouchableOpacity
-                onPress = {() => navigation.navigate('emociones')} title="Next screen 3">
+                onPress = {() => navigation.navigate('emociones', {user: user})} title="Next screen 3">
                 <Image 
                   source={require("../src/images/Emociones.png")}
                   style={styles.cardImage}/>
@@ -142,7 +138,6 @@ const styles = StyleSheet.create(
       justifyContent: "center",
       height: 56,
       width: 56,
-      //marginLeft: 5,
       marginRight: 5,
       marginTop: 30,
       borderRadius: 50,

@@ -4,12 +4,13 @@ import {validateEmail} from "../src/utils/Validation";
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
 
-const Login = ({navigation}) =>{
+const Login = ({navigation}) => {
+
     const [formData, setFormData] = useState(defaultValue);
     const [formError, setFormError] = useState({});
     const [warning, setWarning] = useState('');
 
-    const login = ()=>{
+    const login = () => {
         let error ={};
         if (!formData.email || !formData.password){
             if(!formData.email) error.email = true;
@@ -23,7 +24,7 @@ const Login = ({navigation}) =>{
                 console.log("ok");
                 navigation.replace('menu');
             })
-            .catch((err)=>{
+            .catch((err) => {
                 var error = messageError(err.code);
                 setWarning(error);
             });
@@ -31,10 +32,10 @@ const Login = ({navigation}) =>{
         setFormError(error);
     };
 
-    const onChange=(e,type)=>{
+    const onChange=(e, type) => {
         let error ={};
         setWarning('')
-        setFormData({...formData,[type]:e.nativeEvent.text});
+        setFormData({...formData, [type]:e.nativeEvent.text });
         if(!validateEmail(formData.email)){
             error.email=true;
         } else {
@@ -55,7 +56,7 @@ return(
                     placeholder="Correo"
                     placeholderTextColor="#1687a7"
                     style={[styles.marginText]}
-                    onChange={(e)=>onChange(e,"email")}/>
+                    onChange={(e) => onChange(e,"email")}/>
             </View>
             <View style={[styles.margin, formError.password && styles.errorInput]}>
                 <TextInput 
@@ -63,7 +64,7 @@ return(
                     placeholderTextColor="#1687a7"
                     secureTextEntry={true}
                     style={[styles.marginText]}
-                    onChange={(e)=>onChange(e,"password")} />
+                    onChange={(e) => onChange(e,"password")} />
             </View>
             <Text  
                 style={styles.warning}>

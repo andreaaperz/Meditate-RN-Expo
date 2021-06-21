@@ -50,7 +50,7 @@ export default class Emotions extends React.Component{
                 </TouchableOpacity> 
             <View>
                 <Text style={styles.title}> {animo} </Text>
-                <Text style={styles.date}> {fecha} </Text>
+                <Text style={styles.date}> hola </Text>
             </View>
             
         </TouchableOpacity>

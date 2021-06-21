@@ -1,5 +1,5 @@
 import React,  { useState } from 'react'
-import {View, Text, StyleSheet ,Image, ImageBackground, TouchableWithoutFeedback} from 'react-native'
+import {View, Text, StyleSheet ,Image, ImageBackground} from 'react-native'
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Audios from '../src/components/Audios';
 import { Audio } from 'expo-av';

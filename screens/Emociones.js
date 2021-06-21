@@ -8,8 +8,9 @@ import 'firebase/firestore'
 
 const db = firebase.firestore(firebase);
 
-const Emociones = () =>{
+const Emociones = ({route}) =>{
   const [list, setList] = useState([]);
+  const [usuario, setUsuario] = useState(route.params.user);
 
   useEffect(() => {
       getEmotions();
@@ -18,8 +19,9 @@ const Emociones = () =>{
   const getEmotions = () => {
     setList([]);
     const itemsArray = [];
-    var user2 = firebase.auth().currentUser;
-    db.collection('detalleEmociones').where("idUsuario", "==", user2.uid)
+    /* SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    sfd.format(new Date(timestamp)); */
+    db.collection('detalleEmociones').where("idUsuario", "==", usuario.uid)
       .get()
       .then((response) => {
         response.forEach((doc) => {
@@ -39,21 +41,19 @@ const Emociones = () =>{
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = dd + '/' + mm + '/' + yyyy;
+    today = mm + '/' + dd + '/' + yyyy;
     console.log(today);
-
-        firebase.auth().onAuthStateChanged(user =>{
-            db.collection('detalleEmociones').add({
-                idEmocion: idEmocion,
-                idUsuario: user.uid,
-                fecha: today
-            }).then(()=>{
-                getEmotions();
-                console.log('agregado');
-            }).catch(err=>{
-                console.log(err);
-            }) 
-        })  
+        
+        db.collection('detalleEmociones').add({
+            idEmocion: idEmocion,
+            idUsuario: usuario.uid,
+            fecha: today
+        }).then(()=>{
+            getEmotions();
+            console.log('agregado');
+        }).catch(err=>{
+            console.log(err);
+        }) 
   }
 
   const deleteEmotion = (emotion) => {
@@ -141,11 +141,11 @@ return(
                 vertical
                 style={styles.history}>
                     {list.map((item, index) => (
-                        <Emotions
-                            key = {index}
-                            animo= {item.animo}
-                            fecha={item.fecha}
-                            onPress={()=>deleteEmotion(item.id)}/>
+                      <Emotions
+                          key = {index}
+                          animo= {item.animo}
+                          fecha={item.fecha}
+                          onPress={()=>deleteEmotion(item.id)}/>
                     ))} 
                 </ScrollView>
          </ImageBackground>    

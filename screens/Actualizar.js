@@ -9,7 +9,7 @@ import 'firebase/auth'
 
 const db = firebase.firestore(firebase);
 
-const Actualizar = ({navigation}) =>{
+const Actualizar = ({navigation, route}) =>{
     const initialState = {
         id: "",
         nombre: "",
@@ -17,14 +17,13 @@ const Actualizar = ({navigation}) =>{
         contra: "",
         edad: "",
         genero: ""
-      };
+    };
 
   const [user, setUser] = useState(initialState);
   const [formError, setFormError] = useState({});
   const [warning, setWarning] = useState('');
-  const [picker, setPicker] = useState();
-
-  
+  const [picker, setPicker] = useState('');
+  var usuario = route.params.user;
 
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
@@ -39,15 +38,14 @@ const Actualizar = ({navigation}) =>{
     getUserId();
   }, []);
 
-  const getUserId = async () => {
-    firebase.auth().onAuthStateChanged(cred =>{
-    const usuario = cred.uid
-        db.collection('usuarios').doc(usuario).get()
-        .then(datos=>{
-            var currentU = firebase.auth().currentUser;
-            setUser({ ...datos.data(), id: usuario, correo: currentU.email});
-        })
+  const getUserId = () => {
+    db.collection('usuarios').doc(usuario.uid)
+    .get()
+    .then(datos=>{
+        setUser({ ...datos.data(), id: usuario.uid , correo: usuario.email});
+        setPicker(datos.data().genero);
     });
+    
   };
 
   const updateUser = async () => {
@@ -69,55 +67,36 @@ const Actualizar = ({navigation}) =>{
     else if (user.edad < 5 || user.edad > 99) {
         error.edad = true;
         setWarning('Rango de edad no válido');
-    } else {
-        const userRef = db.collection("usuarios").doc(user.id);
-        await userRef.set({
-        nombre: user.nombre,
-        edad: user.edad,
-        genero: picker,
-        }).then(()=>{
-            var currentU = firebase.auth().currentUser;
-            currentU.updateEmail(user.correo).then(function() {
-                console.log('correo actualizado')
-            }).catch(function(error) {
-                console.log('Error de email: ', error)
-            });          
-        }).then(()=>{
-            if (user.contra){
-                var currentU = firebase.auth().currentUser;
-                currentU.updatePassword(user.contra).then(function() {
-                    console.log('contraseña actualizada')
+    } 
+    else {
+        const userUpd = db.collection("usuarios").doc(usuario.uid);
+        await userUpd.set({
+            nombre: user.nombre,
+            edad: user.edad,
+            genero: picker,
+            }).then(()=>{
+                usuario.updateEmail(user.correo).then(function() {
+                    console.log('correo actualizado')
                 }).catch(function(error) {
-                    console.log('Error en la contraseña: ', error)
-                });
-            }
+                    console.log('Error de email: ', error)
+                });          
+            }).then(()=>{
+                if (user.contra){
+                    usuario.updatePassword(user.contra).then(function() {
+                        console.log('contraseña actualizada')
+                    }).catch(function(error) {
+                        console.log('Error en la contraseña: ', error)
+                    });
+                }
         }).then(()=>{
             navigation.navigate('menu')
         }).catch(err=>{
             setWarning(err);
         })
     }
-    setUser(initialState);
+
     setFormError(error);
   };
-
-   /* const deleteU = async () => {
-    const currentU = db.collection("usuarios").doc(user.id);
-    await currentU.delete()
-     .then(()=>{
-        var user = firebase.auth().currentUser;
-        user.delete().then(function() {
-            console.log("Se eliminó correctamente");
-        }).catch(function(error) {
-            console.log(error)
-        });
-    }) 
-    .then(()=>{
-        navigation.navigate('login')
-    }).catch((err)=>{
-        console.log(err)
-    });
-  };  */
 
   const deleteU = () => {
     Alert.alert(
@@ -131,11 +110,10 @@ const Actualizar = ({navigation}) =>{
         {
           text: 'Eliminar',
           onPress: () => {
-            const currentU = db.collection("usuarios").doc(user.id);
+            const currentU = db.collection("usuarios").doc(usuario.uid);
             currentU.delete()
              .then(()=>{
-                var user2 = firebase.auth().currentUser;
-                user2.delete().then(function() {
+                usuario.uid.delete().then(function() {
                     console.log("Se eliminó correctamente");
                 }).catch(function(error) {
                     console.log(error)
@@ -200,15 +178,15 @@ return(
                     value: 'mujer',
                     color: 'purple',
                   }}
-                  value={user.genero || ''}
-                  style={{
+                value={user.genero || 'mujer'}
+                style={{
                     ...pickerSelectStyles,
                     placeholder: {
-                      color: '#1687a7',
-                      fontSize: 14,
+                        color: '#1687a7',
+                        fontSize: 14,
                     },
-                  }}
-                items={[
+                }}
+                items = {[
                     { label: 'Hombre', value: 'hombre', color: '#1687a7' },
                     { label: 'Prefiero no decir', value: 'NA', color: '#1687a7'},
                     ]}
