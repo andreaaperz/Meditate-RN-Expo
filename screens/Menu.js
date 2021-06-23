@@ -21,7 +21,7 @@ const Menu = ({navigation}) => {
     })
   }
 
-  return(
+  return( 
       <ImageBackground
         source={require("../src/images/imagen.jpg")}
         style={styles.background}>

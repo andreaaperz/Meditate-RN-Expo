@@ -1,9 +1,15 @@
 import React from 'react'
 import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
+import moment from 'moment';
 
 export default class Emotions extends React.Component{
     render(){
         const {animo, fecha, onPress} = this.props
+        var date = fecha.toString();
+        date = parseInt(date.substring(18, 28));
+        var newDate = moment(new Date(date * 1000)).format('MM/DD/YYYY hh:mm');
+        date = newDate.toString();
+        
         var icono
         var color
         switch(animo){
@@ -50,7 +56,7 @@ export default class Emotions extends React.Component{
                 </TouchableOpacity> 
             <View>
                 <Text style={styles.title}> {animo} </Text>
-                <Text style={styles.date}> hola </Text>
+                <Text style={styles.date}> {date} </Text>
             </View>
             
         </TouchableOpacity>

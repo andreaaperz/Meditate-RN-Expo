@@ -114,7 +114,7 @@ return(
                 num={1}
                 color="#fde6e6"
                 duration="Duración: 3:04"
-                title="Meditación para principiantes"
+                title="para principiantes"
                 />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => playSound(2)}>

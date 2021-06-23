@@ -20,9 +20,7 @@ const Emociones = ({route}) =>{
   const getEmotions = () => {
     setList([]);
     const itemsArray = [];
-    /* SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    sfd.format(new Date(timestamp)); */
-    db.collection('detalleEmociones').where("idUsuario", "==", usuario.uid)
+    db.collection('detalleEmociones').where("idUsuario", "==", usuario.uid).orderBy('fecha', 'desc')
       .get()
       .then((response) => {
         response.forEach((doc) => {
@@ -42,16 +40,15 @@ const Emociones = ({route}) =>{
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = mm + '/' + dd + '/' + yyyy;
-    console.log(today);
-    
+    today = yyyy + '-' + mm + '-' + dd  + ' ';
+    var date = new Date(today + moment().format('hh:mm:ss'));
+
         db.collection('detalleEmociones').add({
             idEmocion: idEmocion,
             idUsuario: usuario.uid,
-            fecha: today
+            fecha: date
         }).then(()=>{
             getEmotions();
-            console.log('agregado');
         }).catch(err=>{
             console.log(err);
         }) 
