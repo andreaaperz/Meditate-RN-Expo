@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text,View,Image, TextInput, Switch} from 'react-native';
+import {StyleSheet, Text, View , Image, TextInput } from 'react-native';
 import {validateEmail} from "../src/utils/Validation";
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
@@ -51,20 +51,22 @@ return(
             <Text style={styles.subtitle}>
                 ¿Estás listo para una nueva experiencia?
             </Text>
-            <View style={[styles.margin, formError.email && styles.errorInput ]}>
-                <TextInput 
-                    placeholder="Correo"
-                    placeholderTextColor="#1687a7"
-                    style={[styles.marginText]}
-                    onChange={(e) => onChange(e,"email")}/>
-            </View>
-            <View style={[styles.margin, formError.password && styles.errorInput]}>
-                <TextInput 
-                    placeholder="Contraseña"
-                    placeholderTextColor="#1687a7"
-                    secureTextEntry={true}
-                    style={[styles.marginText]}
-                    onChange={(e) => onChange(e,"password")} />
+            <View styles={{flex:1}}>
+                <View style={[styles.margin, formError.email && styles.errorInput ]}>
+                    <TextInput 
+                        placeholder="Correo"
+                        placeholderTextColor="#1687a7"
+                        style={[styles.marginText]}
+                        onChange={(e) => onChange(e,"email")}/>
+                </View>
+                <View style={[styles.margin, formError.password && styles.errorInput]}>
+                    <TextInput 
+                        placeholder="Contraseña"
+                        placeholderTextColor="#1687a7"
+                        secureTextEntry={true}
+                        style={[styles.marginText]}
+                        onChange={(e) => onChange(e,"password")} />
+                </View>
             </View>
             <Text  
                 style={styles.warning}>
@@ -82,6 +84,7 @@ return(
                 style={styles.registrateBoton}>
                     ¡Regístrate!
             </Text>
+           
         </View>
     );
 }
@@ -115,7 +118,8 @@ function defaultValue() {
 const styles = StyleSheet.create({
     background: {
         backgroundColor:"#FFF",
-        height:"100%"
+        height:"100%",
+        flex: 1
     },
     errorInput:{
         borderColor:"#fe3636"
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
     },
     image:{
         width:"100%",
-        height:"54%"
+        flex: 1
     },
     title: {
         fontSize:30,
@@ -147,7 +151,7 @@ const styles = StyleSheet.create({
         marginHorizontal:55,
         borderWidth:2,
         height: 40,
-        marginTop:17,
+        marginTop:10,
         paddingHorizontal:6,
         borderColor:"#d3e0ea",
         borderRadius: 5,
@@ -171,7 +175,8 @@ const styles = StyleSheet.create({
     registrateBoton: {
         alignSelf:"center",
         color:"#1687a7",
-        paddingVertical:5
+        paddingVertical:5,
+        marginBottom: 30
     }
 })
 

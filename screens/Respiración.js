@@ -173,15 +173,15 @@ return(
 
 const styles = StyleSheet.create({
     image: {
-        width: 190,
-        height: 190,
+        width: 140,
+        height: 140,
         borderRadius: 100,
         marginTop: 30,
         alignSelf:"center"
     },
     play: {
-        width: 190,
-        height: 190,
+        width: 140,
+        height: 140,
         alignSelf:"center",
         marginTop: 30,
         position: "absolute"
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         marginHorizontal:55,
-        fontSize: 17,
+        fontSize: 13,
         textAlign:'center',
         marginTop:3,
         opacity:0.6

@@ -137,11 +137,13 @@ const styles = StyleSheet.create(
             color:"#1687a7",
         }, 
         bottomText: {
+            fontSize: 10
         },
         descriptionCard: {
             backgroundColor:"#0e657e",
             borderRadius:7,
             padding:20,
+            marginBottom: 3,
             marginTop:20
         }, 
         title: {
@@ -150,7 +152,8 @@ const styles = StyleSheet.create(
             marginBottom:10
         },
         content: {
-            marginTop: 10,
+            marginTop: 7,
+            marginBottom: 4,
             textAlign: 'justify',
             color:"#c7f0fb",
         }

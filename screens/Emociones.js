@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import moment from 'moment';
 import {StyleSheet, Text,View,Image, ImageBackground, Alert} from 'react-native';
 import Emotions from '../src/components/Emotions';
 import firebase from '../src/utils/Firebase';
@@ -43,7 +44,7 @@ const Emociones = ({route}) =>{
 
     today = mm + '/' + dd + '/' + yyyy;
     console.log(today);
-        
+    
         db.collection('detalleEmociones').add({
             idEmocion: idEmocion,
             idUsuario: usuario.uid,
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
     },
     scroll: { 
       flexDirection:"row",
-      paddingHorizontal: 20,
+      paddingHorizontal: 4,
       alignSelf: "center",
       width: "100%",
     },
@@ -174,13 +175,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         color: "#0e657e",
         fontWeight: '300',
-        fontSize:30,
+        fontSize:28,
         marginTop: 30,
         textAlign: 'center',
         alignSelf:"center",
     },
     subtitle: {
-        fontSize:19,
+        fontSize:15,
         padding: 10,
         textAlign:'center',
         opacity:0.6
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     }, 
     historial: {
         fontSize:25,
-        padding: 10,
+        padding: 2,
         color:"#fff",
         fontWeight: "100",
         textAlign:'center',

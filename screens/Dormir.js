@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, Image} from 'react-native';
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Video, AVPlaybackStatus } from 'expo-av';
+import {StyleSheet, Text, Dimensions, Image} from 'react-native';
+import { ScrollView } from "react-native-gesture-handler";
+import { Video } from 'expo-av';
 
 const  { width, height } = Dimensions.get('window');
 
@@ -9,11 +9,11 @@ const Dormir = () =>{
 return(
     <ScrollView
             vertical
-            style={styles.scrollCarousel}>
+            style={styles.scrollCarousel} >
         <Image source ={require('../src/images/day.png')} style={styles.image}/> 
-        <Text style={styles.title} >"El descanso pertenece al trabajo como los párpados a los ojos..."</Text>
-        <Text style={styles.subtitle}>Mejora tu sueño con los siguientes videos: </Text>
-        <Text style={styles.videoTitle}>1. Las mejores posiciones para dormir</Text>
+        <Text style={styles.title} > "El descanso pertenece al trabajo como los párpados a los ojos..."</Text>
+        <Text style={styles.subtitle}> Mejora tu sueño con los siguientes videos: </Text>
+        <Text style={styles.videoTitle}> 1. Las mejores posiciones para dormir</Text>
         <Video
             source={require('../src/videos/Posiciones.mp4')}
             useNativeControls

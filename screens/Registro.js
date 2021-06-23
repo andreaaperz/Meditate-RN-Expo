@@ -62,7 +62,8 @@ const Registro = ({navigation}) =>{
 
     return(
         <View style={styles.background}>
-            <Image source ={require('../src/images/flor.png')} style={styles.image}/> 
+            <Image source ={require('../src/images/flor.png')} style={styles.image}/>
+            
             <Text style={styles.title}>
                 Empieza a usar Meditate
             </Text>
@@ -146,28 +147,29 @@ const styles = StyleSheet.create({
     image:{
         width: 140,
         height: 140,
+        flex: 1,
         alignSelf:"center"
     },
     error:{
         borderColor:"#fe3636"
     },
     warning:{
-        marginTop: 10,
+        marginTop: 2,
         alignSelf: 'center',
         color: "#940c0c"
     },
     background: {
         backgroundColor:"#FFF",
         height:"100%",
-        marginTop: 50
     },
     title: {
-        fontSize:30,
-        alignSelf:"center",
+        fontSize:22,
+        marginHorizontal:50,
+        textAlign: "center",
     }, 
     subtitle: {
         marginHorizontal:50,
-        fontSize: 17,
+        fontSize: 15,
         textAlign:'center',
         marginTop:5,
         opacity:0.5
@@ -177,7 +179,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         marginHorizontal:55,
         borderWidth:2,
-        marginTop:17,
+        marginTop:8,
         height: 40,
         paddingHorizontal:10,
         borderColor:"#d3e0ea",
@@ -188,10 +190,11 @@ const styles = StyleSheet.create({
         marginHorizontal:110,
         alignItems:"center",
         justifyContent:"center",
-        marginTop:20,
+        marginTop:10,
         backgroundColor:"#f25287",
         paddingVertical:10,
-        borderRadius:7
+        borderRadius:7,
+        marginBottom: 8
     },
     textboton: {
         color:"white",
@@ -223,14 +226,18 @@ const pickerSelectStyles = StyleSheet.create({
       paddingRight: 30, 
     },
       inputAndroid: {
-      fontSize: 16,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 0.5,
-      borderColor: 'purple',
-      borderRadius: 8,
-      color: 'black',
-      paddingRight: 30, 
+        fontSize: 14,
+        paddingVertical: 7,
+        paddingHorizontal: 10,
+        borderWidth: 2,
+        borderRadius: 20,
+        marginTop: 12,
+        alignItems:"center",
+        marginHorizontal: 55,
+        borderColor: '#d3e0ea',
+        borderRadius: 4,
+        color: 'black',
+        paddingRight: 30, 
     }, 
   });
  

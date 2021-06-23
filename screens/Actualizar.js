@@ -110,10 +110,11 @@ const Actualizar = ({navigation, route}) =>{
         {
           text: 'Eliminar',
           onPress: () => {
-            const currentU = db.collection("usuarios").doc(usuario.uid);
-            currentU.delete()
-             .then(()=>{
-                usuario.uid.delete().then(function() {
+            db.collection("usuarios").doc(usuario.uid)
+            .delete()
+            .then(()=>{
+                var authUser = firebase.auth().currentUser;
+                authUser.delete().then(function() {
                     console.log("Se eliminó correctamente");
                 }).catch(function(error) {
                     console.log(error)
@@ -206,24 +207,26 @@ const styles = StyleSheet.create({
     image:{
         width: 140,
         height: 140,
-        marginTop: 20,
-        marginBottom: 20,
-        alignSelf:"center"
+        marginTop: 10,
+        marginBottom: 10,
+        alignSelf:"center",
+        flex: 1
     },
     errorIn:{
         borderColor:"#fe3636"
     },
     warning:{
-        marginTop: 10,
+        marginTop: 5,
         alignSelf: 'center',
         color: "#940c0c"
     },
     background: {
         backgroundColor:"#FFF",
         height:"100%",
+        flex:1
     },
     title: {
-        fontSize:30,
+        fontSize:27,
         color: "#0e657e",
         alignSelf:"center",
     }, 
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
         marginHorizontal:50,
         fontSize: 17,
         textAlign:'center',
-        marginTop:5,
+        marginTop:1,
         opacity:0.5
     },
     margin:{
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         marginHorizontal:55,
         borderWidth:2,
-        marginTop:17,
+        marginTop:10,
         height: 40,
         paddingHorizontal:10,
         borderColor:"#d3e0ea",
@@ -250,9 +253,10 @@ const styles = StyleSheet.create({
         marginHorizontal:110,
         alignItems:"center",
         justifyContent:"center",
-        marginTop:20,
+        marginTop:3,
         backgroundColor:"#f25287",
         paddingVertical:10,
+        marginBottom: 9,
         borderRadius:7
     },
     textboton: {
@@ -282,18 +286,23 @@ const pickerSelectStyles = StyleSheet.create({
       borderColor: '#d3e0ea',
       borderRadius: 4,
       color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
+      paddingRight: 30, 
     },
-   /*  inputAndroid: {
-      fontSize: 16,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 0.5,
-      borderColor: 'purple',
-      borderRadius: 8,
-      color: 'black',
-      paddingRight: 30, // to ensure the text is never behind the icon
-    }, */
+    inputAndroid: {
+        fontSize: 14,
+        paddingVertical: 2,
+        paddingHorizontal: 10,
+        borderWidth: 2,
+        borderRadius: 20,
+        marginTop: 12,
+        alignItems:"center",
+        marginHorizontal: 55,
+        borderColor: '#d3e0ea',
+        borderRadius: 4,
+        color: 'black',
+        paddingRight: 30, 
+    }, 
+  
   });
  
 export default Actualizar

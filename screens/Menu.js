@@ -108,13 +108,13 @@ const styles = StyleSheet.create(
     },
     mainRow: {
       flexDirection: "row",
-      marginTop: 10,
+      marginTop: 7,
       alignItems: "center",
       paddingHorizontal: 40,
     },
     container:{ 
       paddingHorizontal: 30, 
-      marginTop: 25 
+      marginTop: 4 
     },
     title: {
       fontSize: 40,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create(
     },
     scroll: { 
       marginRight: -40,
-      marginTop: 10 ,
+      marginTop: 8,
       alignSelf: 'flex-end',
       marginRight: 1
     },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create(
       height: 56,
       width: 56,
       marginRight: 5,
-      marginTop: 30,
+      marginTop: 12,
       borderRadius: 50,
       alignSelf: 'flex-end',
       backgroundColor: "#f25287",
@@ -150,7 +150,7 @@ const styles = StyleSheet.create(
     },
     scrollCarousel: { 
       marginHorizontal: -40, 
-      marginTop: 50 
+      marginTop: 40 
     },
     card: {
       backgroundColor: "#FEFEFE",
