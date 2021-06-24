@@ -64,12 +64,16 @@ const initialState = {
             edad: user.edad,
             genero: picker,
             }).then(()=>{
-            navigation.navigate('lista')
+            navigation.replace('lista')
         }).catch(err=>{
             setWarning(err);
         })
     }
     setFormError(error);
+  };
+
+  const cancelar = () => {
+    navigation.replace('lista')
   };
 
   const deleteU = () => {
@@ -87,7 +91,7 @@ const initialState = {
             db.collection("usuarios").doc(route.params.userId)
             .delete()
             .then(()=>{
-                navigation.navigate('lista')
+                navigation.replace('lista')
             }).catch((err)=>{
                 console.log(err)
             });
@@ -147,6 +151,9 @@ return(
             </View>
             <View style={styles.boton}>
                 <Text style={styles.textboton} onPress={()=>deleteU()}>Borrar</Text>
+            </View>
+            <View style={styles.boton}>
+                <Text style={styles.textboton} onPress={()=>cancelar()}>Cancelar</Text>
             </View>
         </View> 
     );
