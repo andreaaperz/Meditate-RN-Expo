@@ -10,6 +10,8 @@ import Reflexion from './screens/Reflexion';
 import Emociones from './screens/Emociones';
 import Dormir from './screens/Dormir';
 import Actualizar from './screens/Actualizar';
+import ListaUsuarios from './screens/ListaUsuarios';
+import DetalleUsuario from './screens/DetalleUsuario';
 import { LogBox  } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -28,6 +30,8 @@ const myApp = () =>{
         <Stack.Screen name = "dormir" component = {Dormir}/>
         <Stack.Screen name = "emociones" component = {Emociones}/>
         <Stack.Screen name = "actualizar" component = {Actualizar} />
+        <Stack.Screen name = "lista" component = {ListaUsuarios} />
+        <Stack.Screen name = "detalle" component = {DetalleUsuario} />
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -20,7 +20,22 @@ const Menu = ({navigation}) => {
         usuario = cred;
         setUsrID(usuario);
     });
-    validateGender();
+
+    /* db.collection('usuarios').doc(user.uid)
+        .get()
+        .then(datos=>{
+            setHello({genero: datos.data().genero, nombre: datos.data().nombre})
+            if (datos.data().genero == 'mujer'){
+              setGender('Bienvenida ' + datos.data().nombre)
+            } else if (datos.data().genero == 'hombre'){
+              setGender('Bienvenido ' + datos.data().nombre)
+            }  else {
+              setGender('Bienvenide ' + datos.data().nombre)
+            }
+        }).catch(err => {
+          console.log(err);
+        }); */
+    //validateGender();
   }); 
 
   const logout = () => {

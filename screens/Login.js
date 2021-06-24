@@ -9,6 +9,7 @@ const Login = ({navigation}) => {
     const [formData, setFormData] = useState(defaultValue);
     const [formError, setFormError] = useState({});
     const [warning, setWarning] = useState('');
+    const [admitted, setAdmitted] = useState(false);
 
     const login = () => {
         let error ={};
@@ -20,9 +21,12 @@ const Login = ({navigation}) => {
             setWarning('Correo inválido')
         } else {
             firebase.auth().signInWithEmailAndPassword(formData.email,formData.password)
-            .then(()=>{
-                console.log("ok");
-                navigation.replace('menu');
+            .then((juan)=>{
+                if(juan.user.uid == "FsvQ8ec8yAXBqutccGDiXFULnj13"){
+                    navigation.replace('lista');
+                } else {
+                    navigation.replace('menu');
+                }
             })
             .catch((err) => {
                 var error = messageError(err.code);

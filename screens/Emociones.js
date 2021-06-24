@@ -42,6 +42,7 @@ const Emociones = ({route}) =>{
 
     today = yyyy + '-' + mm + '-' + dd  + ' ';
     var date = new Date(today + moment().format('hh:mm:ss'));
+    //console.log(date2);
 
         db.collection('detalleEmociones').add({
             idEmocion: idEmocion,

@@ -9,15 +9,14 @@ import 'firebase/auth'
 
 const db = firebase.firestore(firebase);
 
-const Actualizar = ({navigation, route}) =>{
-    const initialState = {
-        id: "",
-        nombre: "",
-        correo: "",
-        contra: "",
-        edad: "",
-        genero: ""
-    };
+const DetalleUsuario = ({navigation, route}) =>{
+
+const initialState = {
+    id: "",
+    nombre: "",
+    edad: "",
+    genero: ""
+};
 
   const [user, setUser] = useState(initialState);
   const [formError, setFormError] = useState({});
@@ -39,68 +38,44 @@ const Actualizar = ({navigation, route}) =>{
   }, []);
 
   const getUserId = () => {
-    db.collection('usuarios').doc(usuario.uid)
+    db.collection('usuarios').doc(route.params.userId)
     .get()
     .then(datos=>{
-        setUser({ ...datos.data(), id: usuario.uid , correo: usuario.email});
+        setUser({ ...datos.data(), id: route.params.userId});
         setPicker(datos.data().genero);
     });
   };
 
   const updateUser = async () => {
     let error ={};
-    if (!user.correo || !user.nombre || !user.edad) {
+    if (!user.nombre || !user.edad) {
         if (!user.nombre) error.nombre = true;
         if (!user.edad) error.edad = true;
-        if (!user.correo) error.correo = true;
         setWarning('Falta llenar algún campo');
     }
-    else if (!validateEmail(user.correo)) {
-        error.correo = true;
-        setWarning('Correo inválido');
-    }
-    else if (user.contra && user.contra.length < 6 ) {
-        error.contra = true;
-        setWarning('Contraseña débil. Intenta con otra.');
-    } 
     else if (user.edad < 5 || user.edad > 99) {
         error.edad = true;
         setWarning('Rango de edad no válido');
     } 
     else {
-        const userUpd = db.collection("usuarios").doc(usuario.uid);
+        const userUpd = db.collection("usuarios").doc(route.params.userId);
         await userUpd.set({
             nombre: user.nombre,
             edad: user.edad,
             genero: picker,
             }).then(()=>{
-                usuario.updateEmail(user.correo).then(function() {
-                    console.log('correo actualizado')
-                }).catch(function(error) {
-                    console.log('Error de email: ', error)
-                });          
-            }).then(()=>{
-                if (user.contra){
-                    usuario.updatePassword(user.contra).then(function() {
-                        console.log('contraseña actualizada')
-                    }).catch(function(error) {
-                        console.log('Error en la contraseña: ', error)
-                    });
-                }
-        }).then(()=>{
-            navigation.navigate('menu')
+            navigation.navigate('lista')
         }).catch(err=>{
             setWarning(err);
         })
     }
-
     setFormError(error);
   };
 
   const deleteU = () => {
     Alert.alert(
       'Espera',
-      `¿Estas seguro de querer eliminar tu cuenta?`,
+      `¿Estas seguro de querer eliminar esta cuenta?`,
       [
         {
           text: 'Cancelar',
@@ -109,17 +84,10 @@ const Actualizar = ({navigation, route}) =>{
         {
           text: 'Eliminar',
           onPress: () => {
-            db.collection("usuarios").doc(usuario.uid)
+            db.collection("usuarios").doc(route.params.userId)
             .delete()
             .then(()=>{
-                var authUser = firebase.auth().currentUser;
-                authUser.delete().then(function() {
-                    console.log("Se eliminó correctamente");
-                }).catch(function(error) {
-                    console.log(error)
-                });
-            }).then(()=>{
-                navigation.navigate('login')
+                navigation.navigate('lista')
             }).catch((err)=>{
                 console.log(err)
             });
@@ -128,16 +96,12 @@ const Actualizar = ({navigation, route}) =>{
       ],
       {cancelable: false},
     );
-  };
-
+  }; 
+    
 return(
-        <View style={styles.background}>
-            <Image source ={require('../src/images/editar-lapiz.png')} style={styles.image}/> 
+         <View style={styles.background}>
             <Text style={styles.title}> 
                 Actualizar
-            </Text>
-            <Text style={styles.subtitle}> 
-                Edita tus datos
             </Text>
             <Text style={styles.warning}> 
                 {warning}
@@ -147,20 +111,6 @@ return(
                     placeholder="Nombre"
                     value={user.nombre || ''}
                     onChangeText={(value) => handleTextChange(value, "nombre")}
-                    placeholderTextColor="#1687a7"/>
-            </View>
-            <View style={[styles.margin, formError.correo && styles.errorIn ]}>
-                <TextInput 
-                    placeholder="Correo"
-                    value={user.correo || ''}
-                    onChangeText={(value) => handleTextChange(value, "correo")}
-                    placeholderTextColor="#1687a7"/>
-            </View>
-            <View style={[styles.margin, formError.contra && styles.errorIn ]}>
-                <TextInput 
-                    placeholder="Contraseña"
-                    secureTextEntry={true}
-                    onChangeText={(value) => handleTextChange(value, "contra")}
                     placeholderTextColor="#1687a7"/>
             </View>
             <View style={[styles.margin, formError.edad && styles.errorIn ]}>
@@ -198,7 +148,7 @@ return(
             <View style={styles.boton}>
                 <Text style={styles.textboton} onPress={()=>deleteU()}>Borrar</Text>
             </View>
-        </View>
+        </View> 
     );
 }
 
@@ -226,6 +176,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize:27,
+        marginTop: 40,
         color: "#0e657e",
         alignSelf:"center",
     }, 
@@ -285,6 +236,7 @@ const pickerSelectStyles = StyleSheet.create({
       borderColor: '#d3e0ea',
       borderRadius: 4,
       color: 'black',
+      marginBottom: 30,
       paddingRight: 30, 
     },
     inputAndroid: {
@@ -304,4 +256,4 @@ const pickerSelectStyles = StyleSheet.create({
   
   });
  
-export default Actualizar
+export default DetalleUsuario
