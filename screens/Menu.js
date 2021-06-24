@@ -3,9 +3,16 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import firebase from '../src/utils/Firebase';
 import 'firebase/auth';
+import 'firebase/firestore';
+
+const db = firebase.firestore(firebase);
 
 const Menu = ({navigation}) => {
   const [user, setUsrID] = useState ("");
+  const [hello, setHello] = useState ({});
+  const [gender, setGender] = useState ("Bienvenid@");
+  const [loading, setLoading] = useState(false);
+  var suma = 0;
 
   useEffect(() => { 
     var usuario = "";
@@ -13,12 +20,37 @@ const Menu = ({navigation}) => {
         usuario = cred;
         setUsrID(usuario);
     });
+    validateGender();
   }); 
 
-  const logout = ()=>{
+  const logout = () => {
     firebase.auth().signOut().then(() => {
       navigation.navigate('login')
     })
+  }
+
+  const validateGender = async () => {
+    await db.collection('usuarios').doc(user.uid)
+        .get()
+        .then(datos=>{
+            setHello({genero: datos.data().genero, nombre: datos.data().nombre})
+            if (datos.data().genero == 'mujer'){
+              setGender('Bienvenida ' + datos.data().nombre)
+            } else if (datos.data().genero == 'hombre'){
+              setGender('Bienvenido ' + datos.data().nombre)
+            }  else {
+              setGender('Bienvenide ' + datos.data().nombre)
+            }
+        }).catch(err => {
+          console.log(err);
+        });
+
+    suma++;
+    if (suma == 5){
+      setLoading(true);
+    }
+
+    
   }
 
   return( 
@@ -29,29 +61,29 @@ const Menu = ({navigation}) => {
         </View>
         <View style={styles.container}>
             <Text style={styles.title} >
-                Tu lugar...
+                {gender}
             </Text>
             <Text style={styles.subtitle}>
                 Aquí encontrarás todo lo necesario para empezar tu camino
             </Text>
           <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.scroll}>
-            <TouchableOpacity
-              style={styles.bolita}
-              onPress = {() => logout()} title="Next screen 3">
-              <Image
-                source={require("../src/images/logout.png")}
-                style={styles.bolitaImage}/>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.bolita}
-              onPress = {() => navigation.navigate('actualizar', {user: user})} title="Next screen 3">
-              <Image
-                source={require("../src/images/user(2).png")}
-                style={styles.bolitaImage}/>
-            </TouchableOpacity>
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.scroll}>
+              <TouchableOpacity
+                  style={styles.bolita}
+                  onPress = {() => logout()} title="Next screen 3">
+                  <Image
+                    source={require("../src/images/logout.png")}
+                    style={styles.bolitaImage}/>
+              </TouchableOpacity>
+              <TouchableOpacity
+                    style={styles.bolita}
+                    onPress = {() => navigation.navigate('actualizar', {user: user})} title="Next screen 3">
+                    <Image
+                      source={require("../src/images/user(2).png")}
+                      style={styles.bolitaImage}/>
+              </TouchableOpacity>
           </ScrollView>
 
            {/*  --------------------------------------CARRUSEL------------------------------------------- */}
@@ -60,7 +92,7 @@ const Menu = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
             style={styles.scrollCarousel}>
             <View 
-            style={styles.card}>
+              style={styles.card}>
               <TouchableOpacity
                 onPress = {() => navigation.navigate('respiracion')} title="Next screen 3">
                 <Image
