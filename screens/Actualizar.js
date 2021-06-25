@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, Text,View,Image, Alert} from 'react-native';
+import {StyleSheet, Text, View, Image, Alert} from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
 import RNPickerSelect from 'react-native-picker-select';
 import { validateEmail } from '../src/utils/Validation';
@@ -132,7 +132,7 @@ const Actualizar = ({navigation, route}) =>{
 
 return(
         <View style={styles.background}>
-            <Image source ={require('../src/images/editar-lapiz.png')} style={styles.image}/> 
+            <Image source ={require('../src/images/lapiz.png')} style={styles.image}/> 
             <Text style={styles.title}> 
                 Actualizar
             </Text>
@@ -204,8 +204,8 @@ return(
 
 const styles = StyleSheet.create({
     image:{
-        width: 140,
-        height: 140,
+        width: 100,
+        height: 100,
         marginTop: 10,
         marginBottom: 10,
         alignSelf:"center",

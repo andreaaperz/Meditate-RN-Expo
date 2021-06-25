@@ -140,7 +140,7 @@ const styles = StyleSheet.create(
             marginHorizontal:110,
             alignItems:"center",
             justifyContent:"center",
-            marginTop:13,
+            marginTop:53,
             backgroundColor:"#f25287",
             borderRadius:7
         },
